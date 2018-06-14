@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" src="./js/browser-scss.js"></script>
         <link href="./scss/range-input.css" rel="stylesheet"/>
     </head>
     <body>
-        <div class="rangeHolder">
+        <div class="rangeHolder" data-value="5">
             <div class="legendHolder">
                 <div class="legend legend-1" data-value="1">
                     <header>1</header>
@@ -29,19 +28,27 @@
                     <header>7</header>
                 </div>
             </div>
-            <div class="sliderHolder">
+            <div class="sliderHolder" data-value="4">
                 <div class="arrowPointer"></div>
                 <div class="pseudoSlider"></div>
             </div>
         </div>
         <script>
             (() => {
-
-            
-            
-            
-            
-            
+                const rangeHolders = document.querySelectorAll(".rangeHolder");
+                for(let a = 0; a < rangeHolders.length; a++){
+                    const arrowPointer = rangeHolders[a].querySelector(".arrowPointer");
+                    arrowPointer.addEventListener("click", function(e){
+                        let currentValue = parseInt(rangeHolders[a].dataset.value, 10);
+                        if(currentValue > 5 && e.offsetX <= 5){
+                            currentValue--;
+                        }
+                        if(currentValue < 7 && e.offsetX >= 15){
+                            currentValue++;
+                        }
+                        rangeHolders[a].dataset.value = currentValue;
+                    });
+                }
             })();
         </script>
     </body>
