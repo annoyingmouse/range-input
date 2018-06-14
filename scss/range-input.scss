@@ -1,6 +1,5 @@
 $range-width: 980px;
 $range-height: 100px;
-$slider-break: 75%;
 .rangeHolder {
     position: relative;
     width: $range-width;
@@ -52,7 +51,7 @@ $slider-break: 75%;
         .sliderHolder {
             left: 140px;
             .pseudoSlider {
-                background: linear-gradient(to right, lighten(#2b91de, 30%), lighten(#2b91de, 30%) $slider-break, white $slider-break, white);
+                background: linear-gradient(to right, lighten(#2b91de, 30%), lighten(#2b91de, 30%) 60%, white 60%, white);
             }
         }
     }
@@ -60,7 +59,7 @@ $slider-break: 75%;
         .sliderHolder {
             left: calc(140px * 2);
             .pseudoSlider {
-                background: linear-gradient(to right, lighten(#2b91de, 25%), lighten(#2b91de, 25%) $slider-break, white $slider-break, white);
+                background: linear-gradient(to right, lighten(#2b91de, 25%), lighten(#2b91de, 25%) 60%, white 60%, white);
             }
         }
     }
@@ -68,7 +67,7 @@ $slider-break: 75%;
         .sliderHolder {
             left: calc(140px * 3);
             .pseudoSlider {
-                background: linear-gradient(to right, lighten(#2b91de, 20%), lighten(#2b91de, 20%) $slider-break, white $slider-break, white);
+                background: linear-gradient(to right, lighten(#2b91de, 20%), lighten(#2b91de, 20%) 60%, white 60%, white);
             }
         }
     }
@@ -76,7 +75,7 @@ $slider-break: 75%;
         .sliderHolder {
             left: calc(140px * 4);
             .pseudoSlider {
-                background: linear-gradient(to right, lighten(#2b91de, 15%), lighten(#2b91de, 15%) $slider-break, white $slider-break, white);
+                background: linear-gradient(to right, lighten(#2b91de, 15%), lighten(#2b91de, 15%) 60%, white 60%, white);
             }
         }
     }
@@ -84,7 +83,7 @@ $slider-break: 75%;
         .sliderHolder {
             left: calc(140px * 5);
             .pseudoSlider {
-                background: linear-gradient(to right, lighten(#2b91de, 10%), lighten(#2b91de, 10%) $slider-break, white $slider-break, white);
+                background: linear-gradient(to right, lighten(#2b91de, 10%), lighten(#2b91de, 10%) 60%, white 60%, white);
             }
         }
     }
@@ -92,7 +91,7 @@ $slider-break: 75%;
         .sliderHolder {
             left: calc(140px * 6);
             .pseudoSlider {
-                background: linear-gradient(to right, lighten(#2b91de, 5%), lighten(#2b91de, 5%) $slider-break, white $slider-break, white);
+                background: linear-gradient(to right, lighten(#2b91de, 5%), lighten(#2b91de, 5%) 60%, white 60%, white);
             }
         }
     }
@@ -100,15 +99,14 @@ $slider-break: 75%;
         .sliderHolder {
             left: calc(140px * 7);
             .pseudoSlider {
-                background: linear-gradient(to right, #2b91de, #2b91de $slider-break, white $slider-break, white);
+                background: linear-gradient(to right, #2b91de, #2b91de 60%, white 60%, white);
             }
         }
     }
     .sliderHolder {
         position: absolute;
         top: -10px;
-        .arrowPointer {
-            cursor: pointer;
+        .arrowPointerBack {
             position: absolute;
             height: 20px;
             width: 20px;
@@ -123,6 +121,16 @@ $slider-break: 75%;
             height: 120px;
             width: 10px;
             left: -5px;
+        }
+        .arrowPointerFront {
+            cursor: pointer;
+            position: absolute;
+            height: 40px;
+            width: 40px;
+            left: -20px;
+            top: 40px;
+            transform: rotate(45deg);
+            transform-origin: center center;
         }
     }
 }

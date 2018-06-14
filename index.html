@@ -6,47 +6,49 @@
     <body>
         <div class="rangeHolder" data-value="5">
             <div class="legendHolder">
-                <div class="legend legend-1" data-value="1">
+                <div class="legend legend-1">
                     <header>1</header>
                 </div>
-                <div class="legend legend-2" data-value="2">
+                <div class="legend legend-2">
                     <header>2</header>
                 </div>
-                <div class="legend legend-3" data-value="3">
+                <div class="legend legend-3">
                     <header>3</header>
                 </div>
-                <div class="legend legend-4" data-value="4">
+                <div class="legend legend-4">
                     <header>4</header>
                 </div>
-                <div class="legend legend-5" data-value="5">
+                <div class="legend legend-5">
                     <header>5</header>
                 </div>
-                <div class="legend legend-6" data-value="6">
+                <div class="legend legend-6">
                     <header>6</header>
                 </div>
-                <div class="legend legend-7" data-value="7">
+                <div class="legend legend-7">
                     <header>7</header>
                 </div>
             </div>
-            <div class="sliderHolder" data-value="4">
-                <div class="arrowPointer"></div>
+            <div class="sliderHolder">
+                <div class="arrowPointerBack"></div>
                 <div class="pseudoSlider"></div>
+                <div class="arrowPointerFront"></div>
             </div>
         </div>
         <script>
-            (() => {
-                const rangeHolders = document.querySelectorAll(".rangeHolder");
+            (function() {
+                var rangeHolders = document.querySelectorAll(".rangeHolder");
                 for(let a = 0; a < rangeHolders.length; a++){
-                    const arrowPointer = rangeHolders[a].querySelector(".arrowPointer");
-                    arrowPointer.addEventListener("click", function(e){
-                        let currentValue = parseInt(rangeHolders[a].dataset.value, 10);
-                        if(currentValue > 5 && e.offsetX <= 5){
+                    var rangeHolder = rangeHolders[a];
+                    var arrowPointer = rangeHolders[a].querySelector(".arrowPointerFront");
+                    arrowPointer.addEventListener("click", function(e) {
+                        let currentValue = parseInt(rangeHolder.getAttribute("data-value"), 10);
+                        if(currentValue > 5 && e.offsetX < 20){
                             currentValue--;
                         }
-                        if(currentValue < 7 && e.offsetX >= 15){
+                        if(currentValue < 7 && e.offsetX > 20){
                             currentValue++;
                         }
-                        rangeHolders[a].dataset.value = currentValue;
+                        rangeHolder.setAttribute("data-value", currentValue);
                     });
                 }
             })();

@@ -38,36 +38,35 @@
   .rangeHolder[data-value="1"] .sliderHolder {
     left: 140px; }
     .rangeHolder[data-value="1"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #afd6f3, #afd6f3 75%, white 75%, white); }
+      background: linear-gradient(to right, #afd6f3, #afd6f3 60%, white 60%, white); }
   .rangeHolder[data-value="2"] .sliderHolder {
     left: calc(140px * 2); }
     .rangeHolder[data-value="2"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #99caef, #99caef 75%, white 75%, white); }
+      background: linear-gradient(to right, #99caef, #99caef 60%, white 60%, white); }
   .rangeHolder[data-value="3"] .sliderHolder {
     left: calc(140px * 3); }
     .rangeHolder[data-value="3"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #83bfec, #83bfec 75%, white 75%, white); }
+      background: linear-gradient(to right, #83bfec, #83bfec 60%, white 60%, white); }
   .rangeHolder[data-value="4"] .sliderHolder {
     left: calc(140px * 4); }
     .rangeHolder[data-value="4"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #6db3e8, #6db3e8 75%, white 75%, white); }
+      background: linear-gradient(to right, #6db3e8, #6db3e8 60%, white 60%, white); }
   .rangeHolder[data-value="5"] .sliderHolder {
     left: calc(140px * 5); }
     .rangeHolder[data-value="5"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #57a8e5, #57a8e5 75%, white 75%, white); }
+      background: linear-gradient(to right, #57a8e5, #57a8e5 60%, white 60%, white); }
   .rangeHolder[data-value="6"] .sliderHolder {
     left: calc(140px * 6); }
     .rangeHolder[data-value="6"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #419ce1, #419ce1 75%, white 75%, white); }
+      background: linear-gradient(to right, #419ce1, #419ce1 60%, white 60%, white); }
   .rangeHolder[data-value="7"] .sliderHolder {
     left: calc(140px * 7); }
     .rangeHolder[data-value="7"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #2b91de, #2b91de 75%, white 75%, white); }
+      background: linear-gradient(to right, #2b91de, #2b91de 60%, white 60%, white); }
   .rangeHolder .sliderHolder {
     position: absolute;
     top: -10px; }
-    .rangeHolder .sliderHolder .arrowPointer {
-      cursor: pointer;
+    .rangeHolder .sliderHolder .arrowPointerBack {
       position: absolute;
       height: 20px;
       width: 20px;
@@ -81,5 +80,14 @@
       height: 120px;
       width: 10px;
       left: -5px; }
+    .rangeHolder .sliderHolder .arrowPointerFront {
+      cursor: pointer;
+      position: absolute;
+      height: 40px;
+      width: 40px;
+      left: -20px;
+      top: 40px;
+      transform: rotate(45deg);
+      transform-origin: center center; }
 
 /*# sourceMappingURL=range-input.css.map */
