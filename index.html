@@ -3,344 +3,382 @@
     <head>
         <script type="text/javascript" src="./js/browser-scss.js"></script>
         <style type="text/scss">
-            $slider-width: 700px;
-            $slider-gradient-7: linear-gradient(to right, 
-              lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), 
-              lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), 
-              lighten(#2b91de, 20%) percentage(2/7), lighten(#2b91de, 20%) percentage(3/7), 
-              lighten(#2b91de, 15%) percentage(3/7), lighten(#2b91de, 15%) percentage(4/7), 
-              lighten(#2b91de, 10%) percentage(4/7), lighten(#2b91de, 10%) percentage(5/7), 
-              lighten(#2b91de, 5%) percentage(5/7), lighten(#2b91de, 5%) percentage(6/7), 
-              #2b91de percentage(6/7), #2b91de 100%);
-            $slider-gradient-6: linear-gradient(to right, 
-              lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), 
-              lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), 
-              lighten(#2b91de, 20%) percentage(2/7), lighten(#2b91de, 20%) percentage(3/7), 
-              lighten(#2b91de, 15%) percentage(3/7), lighten(#2b91de, 15%) percentage(4/7), 
-              lighten(#2b91de, 10%) percentage(4/7), lighten(#2b91de, 10%) percentage(5/7), 
-              lighten(#2b91de, 5%) percentage(5/7), lighten(#2b91de, 5%) percentage(6/7), 
-              #8a8a8a percentage(6/7), #8a8a8a 100%);
-            $slider-gradient-5: linear-gradient(to right, 
-              lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), 
-              lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), 
-              lighten(#2b91de, 20%) percentage(2/7), lighten(#2b91de, 20%) percentage(3/7), 
-              lighten(#2b91de, 15%) percentage(3/7), lighten(#2b91de, 15%) percentage(4/7), 
-              lighten(#2b91de, 10%) percentage(4/7), lighten(#2b91de, 10%) percentage(5/7), 
-              lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), 
-              #8a8a8a percentage(6/7), #8a8a8a 100%);
-            $slider-gradient-4: linear-gradient(to right, 
-              lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), 
-              lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), 
-              lighten(#2b91de, 20%) percentage(2/7), lighten(#2b91de, 20%) percentage(3/7), 
-              lighten(#2b91de, 15%) percentage(3/7), lighten(#2b91de, 15%) percentage(4/7), 
-              lighten(#8a8a8a, 10%) percentage(4/7), lighten(#8a8a8a, 10%) percentage(5/7), 
-              lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), 
-              #8a8a8a percentage(6/7), #8a8a8a 100%);
-            $slider-gradient-3: linear-gradient(to right, 
-              lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), 
-              lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), 
-              lighten(#2b91de, 20%) percentage(2/7), lighten(#2b91de, 20%) percentage(3/7), 
-              lighten(#8a8a8a, 15%) percentage(3/7), lighten(#8a8a8a, 15%) percentage(4/7), 
-              lighten(#8a8a8a, 10%) percentage(4/7), lighten(#8a8a8a, 10%) percentage(5/7), 
-              lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), 
-              #8a8a8a percentage(6/7), #8a8a8a 100%); 
-            $slider-gradient-2: linear-gradient(to right, 
-              lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), 
-              lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), 
-              lighten(#8a8a8a, 20%) percentage(2/7), lighten(#8a8a8a, 20%) percentage(3/7), 
-              lighten(#8a8a8a, 15%) percentage(3/7), lighten(#8a8a8a, 15%) percentage(4/7), 
-              lighten(#8a8a8a, 10%) percentage(4/7), lighten(#8a8a8a, 10%) percentage(5/7), 
-              lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), 
-              #8a8a8a percentage(6/7), #8a8a8a 100%);
-            $slider-gradient-1: linear-gradient(to right, 
-              lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), 
-              lighten(#8a8a8a, 25%) percentage(1/7), lighten(#8a8a8a, 25%) percentage(2/7), 
-              lighten(#8a8a8a, 20%) percentage(2/7), lighten(#8a8a8a, 20%) percentage(3/7), 
-              lighten(#8a8a8a, 15%) percentage(3/7), lighten(#8a8a8a, 15%) percentage(4/7), 
-              lighten(#8a8a8a, 10%) percentage(4/7), lighten(#8a8a8a, 10%) percentage(5/7), 
-              lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), 
-              #8a8a8a percentage(6/7), #8a8a8a 100%);
-            $slider-gradient-0: linear-gradient(to right, 
-              lighten(#8a8a8a, 30%) 0%, lighten(#8a8a8a, 30%) percentage(1/7), 
-              lighten(#8a8a8a, 25%) percentage(1/7), lighten(#8a8a8a, 25%) percentage(2/7), 
-              lighten(#8a8a8a, 20%) percentage(2/7), lighten(#8a8a8a, 20%) percentage(3/7), 
-              lighten(#8a8a8a, 15%) percentage(3/7), lighten(#8a8a8a, 15%) percentage(4/7), 
-              lighten(#8a8a8a, 10%) percentage(4/7), lighten(#8a8a8a, 10%) percentage(5/7), 
-              lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), 
-              #8a8a8a percentage(6/7), #8a8a8a 100%);
+            /*$slider-width: 700px;*/
+            /*$slider-gradient-7: linear-gradient(to right, */
+            /*  lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), */
+            /*  lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), */
+            /*  lighten(#2b91de, 20%) percentage(2/7), lighten(#2b91de, 20%) percentage(3/7), */
+            /*  lighten(#2b91de, 15%) percentage(3/7), lighten(#2b91de, 15%) percentage(4/7), */
+            /*  lighten(#2b91de, 10%) percentage(4/7), lighten(#2b91de, 10%) percentage(5/7), */
+            /*  lighten(#2b91de, 5%) percentage(5/7), lighten(#2b91de, 5%) percentage(6/7), */
+            /*  #2b91de percentage(6/7), #2b91de 100%);*/
+            /*$slider-gradient-6: linear-gradient(to right, */
+            /*  lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), */
+            /*  lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), */
+            /*  lighten(#2b91de, 20%) percentage(2/7), lighten(#2b91de, 20%) percentage(3/7), */
+            /*  lighten(#2b91de, 15%) percentage(3/7), lighten(#2b91de, 15%) percentage(4/7), */
+            /*  lighten(#2b91de, 10%) percentage(4/7), lighten(#2b91de, 10%) percentage(5/7), */
+            /*  lighten(#2b91de, 5%) percentage(5/7), lighten(#2b91de, 5%) percentage(6/7), */
+            /*  #8a8a8a percentage(6/7), #8a8a8a 100%);*/
+            /*$slider-gradient-5: linear-gradient(to right, */
+            /*  lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), */
+            /*  lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), */
+            /*  lighten(#2b91de, 20%) percentage(2/7), lighten(#2b91de, 20%) percentage(3/7), */
+            /*  lighten(#2b91de, 15%) percentage(3/7), lighten(#2b91de, 15%) percentage(4/7), */
+            /*  lighten(#2b91de, 10%) percentage(4/7), lighten(#2b91de, 10%) percentage(5/7), */
+            /*  lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), */
+            /*  #8a8a8a percentage(6/7), #8a8a8a 100%);*/
+            /*$slider-gradient-4: linear-gradient(to right, */
+            /*  lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), */
+            /*  lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), */
+            /*  lighten(#2b91de, 20%) percentage(2/7), lighten(#2b91de, 20%) percentage(3/7), */
+            /*  lighten(#2b91de, 15%) percentage(3/7), lighten(#2b91de, 15%) percentage(4/7), */
+            /*  lighten(#8a8a8a, 10%) percentage(4/7), lighten(#8a8a8a, 10%) percentage(5/7), */
+            /*  lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), */
+            /*  #8a8a8a percentage(6/7), #8a8a8a 100%);*/
+            /*$slider-gradient-3: linear-gradient(to right, */
+            /*  lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), */
+            /*  lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), */
+            /*  lighten(#2b91de, 20%) percentage(2/7), lighten(#2b91de, 20%) percentage(3/7), */
+            /*  lighten(#8a8a8a, 15%) percentage(3/7), lighten(#8a8a8a, 15%) percentage(4/7), */
+            /*  lighten(#8a8a8a, 10%) percentage(4/7), lighten(#8a8a8a, 10%) percentage(5/7), */
+            /*  lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), */
+            /*  #8a8a8a percentage(6/7), #8a8a8a 100%); */
+            /*$slider-gradient-2: linear-gradient(to right, */
+            /*  lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), */
+            /*  lighten(#2b91de, 25%) percentage(1/7), lighten(#2b91de, 25%) percentage(2/7), */
+            /*  lighten(#8a8a8a, 20%) percentage(2/7), lighten(#8a8a8a, 20%) percentage(3/7), */
+            /*  lighten(#8a8a8a, 15%) percentage(3/7), lighten(#8a8a8a, 15%) percentage(4/7), */
+            /*  lighten(#8a8a8a, 10%) percentage(4/7), lighten(#8a8a8a, 10%) percentage(5/7), */
+            /*  lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), */
+            /*  #8a8a8a percentage(6/7), #8a8a8a 100%);*/
+            /*$slider-gradient-1: linear-gradient(to right, */
+            /*  lighten(#2b91de, 30%) 0%, lighten(#2b91de, 30%) percentage(1/7), */
+            /*  lighten(#8a8a8a, 25%) percentage(1/7), lighten(#8a8a8a, 25%) percentage(2/7), */
+            /*  lighten(#8a8a8a, 20%) percentage(2/7), lighten(#8a8a8a, 20%) percentage(3/7), */
+            /*  lighten(#8a8a8a, 15%) percentage(3/7), lighten(#8a8a8a, 15%) percentage(4/7), */
+            /*  lighten(#8a8a8a, 10%) percentage(4/7), lighten(#8a8a8a, 10%) percentage(5/7), */
+            /*  lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), */
+            /*  #8a8a8a percentage(6/7), #8a8a8a 100%);*/
+            /*$slider-gradient-0: linear-gradient(to right, */
+            /*  lighten(#8a8a8a, 30%) 0%, lighten(#8a8a8a, 30%) percentage(1/7), */
+            /*  lighten(#8a8a8a, 25%) percentage(1/7), lighten(#8a8a8a, 25%) percentage(2/7), */
+            /*  lighten(#8a8a8a, 20%) percentage(2/7), lighten(#8a8a8a, 20%) percentage(3/7), */
+            /*  lighten(#8a8a8a, 15%) percentage(3/7), lighten(#8a8a8a, 15%) percentage(4/7), */
+            /*  lighten(#8a8a8a, 10%) percentage(4/7), lighten(#8a8a8a, 10%) percentage(5/7), */
+            /*  lighten(#8a8a8a, 5%) percentage(5/7), lighten(#8a8a8a, 5%) percentage(6/7), */
+            /*  #8a8a8a percentage(6/7), #8a8a8a 100%);*/
 
-            @mixin track($width, $height, $background) {
-                width: $slider-width;
-                height: $height;
-                cursor: pointer;
-                border-color: transparent;
-                color: transparent;
-                margin: 0;
-                border: 0;
-            }
-            @mixin thumb($width, $height, $colour) {
-                border: 1px solid $colour;
-                height: $height;
-                width: $width;
-                cursor: pointer;
-                background: $colour;
-            }
+            /*@mixin track($width, $height, $background) {*/
+            /*    width: $slider-width;*/
+            /*    height: $height;*/
+            /*    cursor: pointer;*/
+            /*    border-color: transparent;*/
+            /*    color: transparent;*/
+            /*    margin: 0;*/
+            /*    border: 0;*/
+            /*}*/
+            /*@mixin thumb($width, $height, $colour) {*/
+            /*    border: 1px solid $colour;*/
+            /*    height: $height;*/
+            /*    width: $width;*/
+            /*    cursor: pointer;*/
+            /*    background: $colour;*/
+            /*}*/
             
-            @mixin fill-lower($width, $height) {
-              background: $slider-gradient-7;
-              background-attachment: fixed;
-              background-position: 0% center;
-              background-repeat: no-repeat;
-              background-size: $width $height;
-            }
+            /*@mixin fill-lower($width, $height) {*/
+            /*  background: $slider-gradient-7;*/
+            /*  background-attachment: fixed;*/
+            /*  background-position: 0% center;*/
+            /*  background-repeat: no-repeat;*/
+            /*  background-size: $width $height;*/
+            /*}*/
             
-            @mixin fill-upper($width, $height) {
-              background: $slider-gradient-0;
-              background-attachment: fixed;
-              background-position: 100% center;
-              background-repeat: no-repeat;
-              background-size: $width $height;
-            }
-            @-moz-document url-prefix() { 
-              input[type=range].range {
-                 position: absolute;
-                 top: $slider-width / 14;
-              }
-            }
-            input[type=range].range {
-              -webkit-appearance: none;
-              width: $slider-width;
-              margin: 0;
-              border: 0;
-              &:focus {
-                outline: none;
-              }
+            /*@mixin fill-upper($width, $height) {*/
+            /*  background: $slider-gradient-0;*/
+            /*  background-attachment: fixed;*/
+            /*  background-position: 100% center;*/
+            /*  background-repeat: no-repeat;*/
+            /*  background-size: $width $height;*/
+            /*}*/
+            /*@-moz-document url-prefix() { */
+            /*  input[type=range].range {*/
+            /*     position: absolute;*/
+            /*     top: $slider-width / 14;*/
+            /*  }*/
+            /*}*/
+            /*input[type=range].range {*/
+            /*  -webkit-appearance: none;*/
+            /*  width: $slider-width;*/
+            /*  margin: 0;*/
+            /*  border: 0;*/
+            /*  &:focus {*/
+            /*    outline: none;*/
+            /*  }*/
 
-              &::-webkit-slider-runnable-track {
-                @include track($slider-width, $slider-width / 7, $slider-gradient-0);
-              }
-              &::-moz-range-track {
-                @include track($slider-width, $slider-width / 7, $slider-gradient-0);
-              }
-              &::-ms-track {
-                @include track($slider-width, $slider-width / 7, $slider-gradient-0);
-              }
+            /*  &::-webkit-slider-runnable-track {*/
+            /*    @include track($slider-width, $slider-width / 7, $slider-gradient-0);*/
+            /*  }*/
+            /*  &::-moz-range-track {*/
+            /*    @include track($slider-width, $slider-width / 7, $slider-gradient-0);*/
+            /*  }*/
+            /*  &::-ms-track {*/
+            /*    @include track($slider-width, $slider-width / 7, $slider-gradient-0);*/
+            /*  }*/
 
-              &[value="0"] {
-                &::-webkit-slider-runnable-track {
-                  background: $slider-gradient-0 !important;
-                }
-                &:focus::-webkit-slider-runnable-track {
-                  background: $slider-gradient-0 !important;
-                }
-                &::-moz-range-track {
-                  background: $slider-gradient-0 !important;
-                }
-                &::-ms-track {
-                  background: $slider-gradient-0 !important;
-                }
-                &:focus::-ms-track {
-                  background: $slider-gradient-0 !important;
-                }
-              }
-              &[value="1"] {
-                &::-webkit-slider-runnable-track {
-                  background: $slider-gradient-1 !important;
-                }
-                &:focus::-webkit-slider-runnable-track {
-                  background: $slider-gradient-1 !important;
-                }
-                &::-moz-range-track {
-                  background: $slider-gradient-1 !important;
-                }
-                &::-ms-track {
-                  background: $slider-gradient-1 !important;
-                }
-                &:focus::-ms-track {
-                  background: $slider-gradient-1 !important;
-                }
-              }
-              &[value="2"] {
-                &::-webkit-slider-runnable-track {
-                  background: $slider-gradient-2 !important;
-                }
-                &:focus::-webkit-slider-runnable-track {
-                  background: $slider-gradient-2 !important;
-                }
-                &::-moz-range-track {
-                  background: $slider-gradient-2 !important;
-                }
-                &::-ms-track {
-                  background: $slider-gradient-2 !important;
-                }
-                &:focus::-ms-track {
-                  background: $slider-gradient-2 !important;
-                }
-              }
-              &[value="3"] {
-                &::-webkit-slider-runnable-track {
-                  background: $slider-gradient-3 !important;
-                }
-                &:focus::-webkit-slider-runnable-track {
-                  background: $slider-gradient-3 !important;
-                }
-                &::-moz-range-track {
-                  background: $slider-gradient-3 !important;
-                }
-                &::-ms-track {
-                  background: $slider-gradient-3 !important;
-                }
-                &:focus::-ms-track {
-                  background: $slider-gradient-3 !important;
-                }
-              }
-              &[value="4"] {
-                &::-webkit-slider-runnable-track {
-                  background: $slider-gradient-4 !important;
-                }
-                &:focus::-webkit-slider-runnable-track {
-                  background: $slider-gradient-4 !important;
-                }
-                &::-moz-range-track {
-                  background: $slider-gradient-4 !important;
-                }
-                &::-ms-track {
-                  background: $slider-gradient-4 !important;
-                }
-                &:focus::-ms-track {
-                  background: $slider-gradient-4 !important;
-                }
-              }
-              &[value="5"] {
-                &::-webkit-slider-runnable-track {
-                  background: $slider-gradient-5 !important;
-                }
-                &:focus::-webkit-slider-runnable-track {
-                  background: $slider-gradient-5 !important;
-                }
-                &::-moz-range-track {
-                  background: $slider-gradient-5 !important;
-                }
-                &::-ms-track {
-                  background: $slider-gradient-5 !important;
-                }
-                &:focus::-ms-track {
-                  background: $slider-gradient-5 !important;
-                }
-              }
-              &[value="6"] {
-                &::-webkit-slider-runnable-track {
-                  background: $slider-gradient-6 !important;
-                }
-                &:focus::-webkit-slider-runnable-track {
-                  background: $slider-gradient-6 !important;
-                }
-                &::-moz-range-track {
-                  background: $slider-gradient-6 !important;
-                }
-                &::-ms-track {
-                  background: $slider-gradient-6 !important;
-                }
-                &:focus::-ms-track {
-                  background: $slider-gradient-6 !important;
-                }
-              }
-              &[value="7"] {
-                &::-webkit-slider-runnable-track {
-                  background: $slider-gradient-7 !important;
-                }
-                &:focus::-webkit-slider-runnable-track {
-                  background: $slider-gradient-7 !important;
-                }
-                &::-moz-range-track {
-                  background: $slider-gradient-7 !important;
-                }
-                &::-ms-track {
-                  background: $slider-gradient-7 !important;
-                }
-                &:focus::-ms-track {
-                  background: $slider-gradient-7 !important;
-                }
-              }
+            /*  &[value="0"] {*/
+            /*    &::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-0 !important;*/
+            /*    }*/
+            /*    &:focus::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-0 !important;*/
+            /*    }*/
+            /*    &::-moz-range-track {*/
+            /*      background: $slider-gradient-0 !important;*/
+            /*    }*/
+            /*    &::-ms-track {*/
+            /*      background: $slider-gradient-0 !important;*/
+            /*    }*/
+            /*    &:focus::-ms-track {*/
+            /*      background: $slider-gradient-0 !important;*/
+            /*    }*/
+            /*  }*/
+            /*  &[value="1"] {*/
+            /*    &::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-1 !important;*/
+            /*    }*/
+            /*    &:focus::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-1 !important;*/
+            /*    }*/
+            /*    &::-moz-range-track {*/
+            /*      background: $slider-gradient-1 !important;*/
+            /*    }*/
+            /*    &::-ms-track {*/
+            /*      background: $slider-gradient-1 !important;*/
+            /*    }*/
+            /*    &:focus::-ms-track {*/
+            /*      background: $slider-gradient-1 !important;*/
+            /*    }*/
+            /*  }*/
+            /*  &[value="2"] {*/
+            /*    &::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-2 !important;*/
+            /*    }*/
+            /*    &:focus::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-2 !important;*/
+            /*    }*/
+            /*    &::-moz-range-track {*/
+            /*      background: $slider-gradient-2 !important;*/
+            /*    }*/
+            /*    &::-ms-track {*/
+            /*      background: $slider-gradient-2 !important;*/
+            /*    }*/
+            /*    &:focus::-ms-track {*/
+            /*      background: $slider-gradient-2 !important;*/
+            /*    }*/
+            /*  }*/
+            /*  &[value="3"] {*/
+            /*    &::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-3 !important;*/
+            /*    }*/
+            /*    &:focus::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-3 !important;*/
+            /*    }*/
+            /*    &::-moz-range-track {*/
+            /*      background: $slider-gradient-3 !important;*/
+            /*    }*/
+            /*    &::-ms-track {*/
+            /*      background: $slider-gradient-3 !important;*/
+            /*    }*/
+            /*    &:focus::-ms-track {*/
+            /*      background: $slider-gradient-3 !important;*/
+            /*    }*/
+            /*  }*/
+            /*  &[value="4"] {*/
+            /*    &::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-4 !important;*/
+            /*    }*/
+            /*    &:focus::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-4 !important;*/
+            /*    }*/
+            /*    &::-moz-range-track {*/
+            /*      background: $slider-gradient-4 !important;*/
+            /*    }*/
+            /*    &::-ms-track {*/
+            /*      background: $slider-gradient-4 !important;*/
+            /*    }*/
+            /*    &:focus::-ms-track {*/
+            /*      background: $slider-gradient-4 !important;*/
+            /*    }*/
+            /*  }*/
+            /*  &[value="5"] {*/
+            /*    &::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-5 !important;*/
+            /*    }*/
+            /*    &:focus::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-5 !important;*/
+            /*    }*/
+            /*    &::-moz-range-track {*/
+            /*      background: $slider-gradient-5 !important;*/
+            /*    }*/
+            /*    &::-ms-track {*/
+            /*      background: $slider-gradient-5 !important;*/
+            /*    }*/
+            /*    &:focus::-ms-track {*/
+            /*      background: $slider-gradient-5 !important;*/
+            /*    }*/
+            /*  }*/
+            /*  &[value="6"] {*/
+            /*    &::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-6 !important;*/
+            /*    }*/
+            /*    &:focus::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-6 !important;*/
+            /*    }*/
+            /*    &::-moz-range-track {*/
+            /*      background: $slider-gradient-6 !important;*/
+            /*    }*/
+            /*    &::-ms-track {*/
+            /*      background: $slider-gradient-6 !important;*/
+            /*    }*/
+            /*    &:focus::-ms-track {*/
+            /*      background: $slider-gradient-6 !important;*/
+            /*    }*/
+            /*  }*/
+            /*  &[value="7"] {*/
+            /*    &::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-7 !important;*/
+            /*    }*/
+            /*    &:focus::-webkit-slider-runnable-track {*/
+            /*      background: $slider-gradient-7 !important;*/
+            /*    }*/
+            /*    &::-moz-range-track {*/
+            /*      background: $slider-gradient-7 !important;*/
+            /*    }*/
+            /*    &::-ms-track {*/
+            /*      background: $slider-gradient-7 !important;*/
+            /*    }*/
+            /*    &:focus::-ms-track {*/
+            /*      background: $slider-gradient-7 !important;*/
+            /*    }*/
+            /*  }*/
               
-              &::-ms-fill-lower {
-                @include fill-lower($slider-width, $slider-width / 7);
-              }
-              &::-ms-fill-upper {
-                @include fill-upper($slider-width, $slider-width / 7);
-              }
-              &:focus {
-                &::-ms-fill-lower {
-                  @include fill-lower($slider-width, $slider-width / 7);
-                }
-                &::-ms-fill-upper {
-                  @include fill-upper($slider-width, $slider-width / 7);
-                }
-              }
+            /*  &::-ms-fill-lower {*/
+            /*    @include fill-lower($slider-width, $slider-width / 7);*/
+            /*  }*/
+            /*  &::-ms-fill-upper {*/
+            /*    @include fill-upper($slider-width, $slider-width / 7);*/
+            /*  }*/
+            /*  &:focus {*/
+            /*    &::-ms-fill-lower {*/
+            /*      @include fill-lower($slider-width, $slider-width / 7);*/
+            /*    }*/
+            /*    &::-ms-fill-upper {*/
+            /*      @include fill-upper($slider-width, $slider-width / 7);*/
+            /*    }*/
+            /*  }*/
               
-              &::-webkit-slider-thumb {
-                @include thumb(5px, $slider-width / 7, #000000)
-                -webkit-appearance: none;
-              }
-              &::-ms-thumb {
-                @include thumb(5px, $slider-width / 7, #000000)
-              }
-              &::-moz-range-thumb {
-                @include thumb(5px, $slider-width / 7, #000000)
-              }
-            }
+            /*  &::-webkit-slider-thumb {*/
+            /*    @include thumb(5px, $slider-width / 7, #000000)*/
+            /*    -webkit-appearance: none;*/
+            /*  }*/
+            /*  &::-ms-thumb {*/
+            /*    @include thumb(5px, $slider-width / 7, #000000)*/
+            /*  }*/
+            /*  &::-moz-range-thumb {*/
+            /*    @include thumb(5px, $slider-width / 7, #000000)*/
+            /*  }*/
+            /*}*/
+            
+            
+            
+            $range-width: 980px;
+            $range-height: 100px;
             .rangeHolder {
               position: relative;
-              width: $slider-width;
-              height: $slider-width / 7;
+              width: $range-width;
+              height: $range-width / 7;
               font-family: Arial, Helvetica, sans-serif;
-            }
-            .legendHolder {
-              position: absolute;
-              width: $slider-width;
-              height: $slider-width / 7;
-              top: 0;
-              left: 0;
-              display: flex;
-              flex-direction: row;
-              flex-wrap: nowrap;
-              justify-content: flex-start;
-            }
-            .legend {
-              width: $slider-width / 7;
-              height: $slider-width / 7;
-              & header{
-                font-size: 2em;
-                font-weight: bold;
-                color: white;
-                margin-left: 5px;
+              .legendHolder {
+                position: absolute;
+                width: $range-width;
+                height: $range-height;
+                top: 0;
+                left: 0;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                .legend {
+                  width: $range-width / 7;
+                  height: $range-height;
+                  & header{
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    color: white;
+                    margin: 5px 0 0 15px;
+                  }
+                }
+                .legend-1 {
+                  background: lighten(#2b91de, 30%);
+                }
+                .legend-2 {
+                  background: lighten(#2b91de, 25%);
+                }
+                .legend-3 {
+                  background: lighten(#2b91de, 20%);
+                }
+                .legend-4 {
+                  background: lighten(#2b91de, 15%);
+                }
+                .legend-5 {
+                  background: lighten(#2b91de, 10%);
+                }
+                .legend-6 {
+                  background: lighten(#2b91de, 5%);
+                }
+                .legend-7 {
+                  background: #2b91de;
+                }.
+                .pseudo-slider: {
+                  position: absolute;
+                  left: 10px;
+                  height: 120px;
+                  top: -10px;
+                  width: 10px;
+                }
+                
+                
               }
             }
+            
+            
         </style>
     </head>
     <body>
         <div class="rangeHolder">
-          <input type="range" class="range" min="0" max="7" value="5">
+          <!--<input type="range" class="range" min="0" max="7" value="5">-->
+          <div class="pseudo-slider"></div>
           <div class="legendHolder">
-            <div class="legend" data-value="1">
+            <div class="legend legend-1" data-value="1">
               <header>1</header>
             </div>
-            <div class="legend" data-value="2">
+            <div class="legend legend-2" data-value="2">
               <header>2</header>
             </div>
-            <div class="legend" data-value="3">
+            <div class="legend legend-3" data-value="3">
               <header>3</header>
             </div>
-            <div class="legend" data-value="4">
+            <div class="legend legend-4" data-value="4">
               <header>4</header>
             </div>
-            <div class="legend" data-value="5">
+            <div class="legend legend-5" data-value="5">
               <header>5</header>
             </div>
-            <div class="legend" data-value="6">
+            <div class="legend legend-6" data-value="6">
               <header>6</header>
             </div>
-            <div class="legend" data-value="7">
+            <div class="legend legend-7" data-value="7">
               <header>7</header>
             </div>
           </div>
