@@ -339,16 +339,15 @@
                 }
                 .legend-7 {
                   background: #2b91de;
-                }.
-                .pseudo-slider: {
-                  position: absolute;
-                  left: 10px;
-                  height: 120px;
-                  top: -10px;
-                  width: 10px;
                 }
-                
-                
+              }
+              .pseudo-slider {
+                position: absolute;
+                left: 10px;
+                height: 120px;
+                top: -10px;
+                width: 10px;
+                background: linear-gradient(to right, #2b91de, #2b91de 60%, white 60%, white);
               }
             }
             
@@ -358,7 +357,6 @@
     <body>
         <div class="rangeHolder">
           <!--<input type="range" class="range" min="0" max="7" value="5">-->
-          <div class="pseudo-slider"></div>
           <div class="legendHolder">
             <div class="legend legend-1" data-value="1">
               <header>1</header>
@@ -382,34 +380,40 @@
               <header>7</header>
             </div>
           </div>
+          <div class="pseudo-slider"></div>
         </div>
         <script>
           (() => {
-            const ranges = document.querySelectorAll(".range");
-            for (let i = 0; i < ranges.length; i++) {
+            // const ranges = document.querySelectorAll(".range");
+            // for (let i = 0; i < ranges.length; i++) {
               
-              ranges[i].addEventListener("input", function(e){
-                const val = parseInt(e.target.value, 10);
-                e.target.setAttribute('value', val);
-                // if(val < 4){
-                //   e.target.value = 4;
-                //   e.target.classList.add("four");
-                //   e.target.setAttribute('value', 4);
-                // }
+            //   ranges[i].addEventListener("input", function(e){
+            //     const val = parseInt(e.target.value, 10);
+            //     e.target.setAttribute('value', val);
+            //     // if(val < 4){
+            //     //   e.target.value = 4;
+            //     //   e.target.classList.add("four");
+            //     //   e.target.setAttribute('value', 4);
+            //     // }
                 
-              });
-              const holder = ranges[i].parentNode;
-              const legends = holder.querySelectorAll(".legend");
-              console.log(legends);
-              for (let l = 0; l < legends.length; l++) {
-                console.log(legends[l]);
-                legends[l].addEventListener("click", function(e){
-                  const val = parseInt(e.target.dataset.value, 10);
-                  ranges[i].value = val;
-                  ranges[i].setAttribute('value', val);
-                });
-              }
-            }
+            //   });
+            //   const holder = ranges[i].parentNode;
+            //   const legends = holder.querySelectorAll(".legend");
+            //   console.log(legends);
+            //   for (let l = 0; l < legends.length; l++) {
+            //     console.log(legends[l]);
+            //     legends[l].addEventListener("click", function(e){
+            //       const val = parseInt(e.target.dataset.value, 10);
+            //       ranges[i].value = val;
+            //       ranges[i].setAttribute('value', val);
+            //     });
+            //   }
+            // }
+            
+            
+            
+            
+            
           })();
           
         </script>
