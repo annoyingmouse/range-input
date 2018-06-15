@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="./scss/range-input.css" rel="stylesheet"/>
+        <link href="style/range-input.css" rel="stylesheet"/>
     </head>
     <body>
         <div class="rangeHolder" data-value="5">
@@ -30,28 +30,10 @@
             </div>
             <div class="sliderHolder">
                 <div class="arrowPointerBack"></div>
-                <div class="pseudoSlider"></div>
                 <div class="arrowPointerFront"></div>
+                <div class="pseudoSlider"></div>
             </div>
         </div>
-        <script>
-            (function() {
-                var rangeHolders = document.querySelectorAll(".rangeHolder");
-                for(let a = 0; a < rangeHolders.length; a++){
-                    var rangeHolder = rangeHolders[a];
-                    var arrowPointer = rangeHolders[a].querySelector(".arrowPointerFront");
-                    arrowPointer.addEventListener("click", function(e) {
-                        let currentValue = parseInt(rangeHolder.getAttribute("data-value"), 10);
-                        if(currentValue > 5 && e.offsetX < 20){
-                            currentValue--;
-                        }
-                        if(currentValue < 7 && e.offsetX > 20){
-                            currentValue++;
-                        }
-                        rangeHolder.setAttribute("data-value", currentValue);
-                    });
-                }
-            })();
-        </script>
+        <script src="dist/js/range-input.js"></script>
     </body>
 </html>

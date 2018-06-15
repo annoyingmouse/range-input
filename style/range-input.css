@@ -17,6 +17,7 @@
       width: 140px;
       height: 100px; }
       .rangeHolder .legendHolder .legend header {
+        cursor: pointer;
         font-size: 1.5em;
         font-weight: bold;
         color: white;
@@ -38,31 +39,31 @@
   .rangeHolder[data-value="1"] .sliderHolder {
     left: 140px; }
     .rangeHolder[data-value="1"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #afd6f3, #afd6f3 60%, white 60%, white); }
+      background: linear-gradient(to right, #afd6f3, #afd6f3 70%, white 70%, white); }
   .rangeHolder[data-value="2"] .sliderHolder {
-    left: calc(140px * 2); }
+    left: 280px; }
     .rangeHolder[data-value="2"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #99caef, #99caef 60%, white 60%, white); }
+      background: linear-gradient(to right, #99caef, #99caef 70%, white 70%, white); }
   .rangeHolder[data-value="3"] .sliderHolder {
-    left: calc(140px * 3); }
+    left: 420px; }
     .rangeHolder[data-value="3"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #83bfec, #83bfec 60%, white 60%, white); }
+      background: linear-gradient(to right, #83bfec, #83bfec 70%, white 70%, white); }
   .rangeHolder[data-value="4"] .sliderHolder {
-    left: calc(140px * 4); }
+    left: 560px; }
     .rangeHolder[data-value="4"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #6db3e8, #6db3e8 60%, white 60%, white); }
+      background: linear-gradient(to right, #6db3e8, #6db3e8 70%, white 70%, white); }
   .rangeHolder[data-value="5"] .sliderHolder {
-    left: calc(140px * 5); }
+    left: 700px; }
     .rangeHolder[data-value="5"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #57a8e5, #57a8e5 60%, white 60%, white); }
+      background: linear-gradient(to right, #57a8e5, #57a8e5 70%, white 70%, white); }
   .rangeHolder[data-value="6"] .sliderHolder {
-    left: calc(140px * 6); }
+    left: 840px; }
     .rangeHolder[data-value="6"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #419ce1, #419ce1 60%, white 60%, white); }
+      background: linear-gradient(to right, #419ce1, #419ce1 70%, white 70%, white); }
   .rangeHolder[data-value="7"] .sliderHolder {
-    left: calc(140px * 7); }
+    left: 980px; }
     .rangeHolder[data-value="7"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #2b91de, #2b91de 60%, white 60%, white); }
+      background: linear-gradient(to right, #2b91de, #2b91de 70%, white 70%, white); }
   .rangeHolder .sliderHolder {
     position: absolute;
     top: -10px; }

@@ -1,0 +1,82 @@
+$range-width: 980px;
+$range-height: 100px;
+$gradient-position: 70%;
+$primary-colour: #2b91de;
+.rangeHolder {
+    position: relative;
+    width: $range-width;
+    height: $range-width / 7;
+    font-family: Arial, Helvetica, sans-serif;
+    .legendHolder {
+        position: absolute;
+        width: $range-width;
+        height: $range-height;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        .legend {
+            width: $range-width / 7;
+            height: $range-height;
+            & header{
+                cursor: pointer;
+                font-size: 1.5em;
+                font-weight: bold;
+                color: white;
+                margin: 5px 0 0 10px;
+            }
+        }
+        @for $i from 1 through 7 {
+            .legend-#{$i} {
+                background: lighten($primary-colour, percentage(abs(($i - 7) * 5 ) / 100));
+            }
+        }
+    }
+    @for $i from 1 through 7 {
+        &[data-value="#{$i}"] {
+            .sliderHolder {
+                left: 140px * $i;
+                .pseudoSlider {
+                    background: linear-gradient(
+                        to right,
+                        lighten($primary-colour, percentage(abs(($i - 7) * 5 ) / 100)),
+                        lighten($primary-colour, percentage(abs(($i - 7) * 5 ) / 100)) $gradient-position,
+                        white $gradient-position,
+                        white);
+                }
+            }
+        }
+    }
+    .sliderHolder {
+        position: absolute;
+        top: -10px;
+        .arrowPointerBack {
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: -10px;
+            top: 50px;
+            background: white;
+            transform: rotate(45deg);
+            transform-origin: center center;
+        }
+        .pseudoSlider {
+            position: absolute;
+            height: 120px;
+            width: 10px;
+            left: -5px;
+        }
+        .arrowPointerFront {
+            cursor: pointer;
+            position: absolute;
+            height: 40px;
+            width: 40px;
+            left: -20px;
+            top: 40px;
+            transform: rotate(45deg);
+            transform-origin: center center;
+        }
+    }
+}
