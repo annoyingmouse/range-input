@@ -2,6 +2,7 @@ $range-width: 980px;
 $range-height: 100px;
 $gradient-position: 70%;
 $primary-colour: #2b91de;
+$deselected-colour: #7f8c8d;
 .rangeHolder {
     position: relative;
     width: $range-width;
@@ -31,6 +32,12 @@ $primary-colour: #2b91de;
         @for $i from 1 through 7 {
             .legend-#{$i} {
                 background: lighten($primary-colour, percentage(abs(($i - 7) * 5 ) / 100));
+                &.deselected {
+                    background: lighten($deselected-colour, percentage(abs(($i - 7) * 5 ) / 100));
+                    & header{
+                        opacity: 0.3;
+                    }
+                }
             }
         }
     }

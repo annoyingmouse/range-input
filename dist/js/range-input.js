@@ -1,13 +1,83 @@
-"use strict";
+'use strict';
+
+// https://tc39.github.io/ecma262/#sec-array.prototype.find
+if (!Array.prototype.find) {
+    Object.defineProperty(Array.prototype, 'find', {
+        value: function value(predicate) {
+            // 1. Let O be ? ToObject(this value).
+            if (this == null) {
+                throw new TypeError('"this" is null or not defined');
+            }
+
+            var o = Object(this);
+
+            // 2. Let len be ? ToLength(? Get(O, "length")).
+            var len = o.length >>> 0;
+
+            // 3. If IsCallable(predicate) is false, throw a TypeError exception.
+            if (typeof predicate !== 'function') {
+                throw new TypeError('predicate must be a function');
+            }
+
+            // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+            var thisArg = arguments[1];
+
+            // 5. Let k be 0.
+            var k = 0;
+
+            // 6. Repeat, while k < len
+            while (k < len) {
+                // a. Let Pk be ! ToString(k).
+                // b. Let kValue be ? Get(O, Pk).
+                // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
+                // d. If testResult is true, return kValue.
+                var kValue = o[k];
+                if (predicate.call(thisArg, kValue, k, o)) {
+                    return kValue;
+                }
+                // e. Increase k by 1.
+                k++;
+            }
+
+            // 7. Return undefined.
+            return undefined;
+        },
+        configurable: true,
+        writable: true
+    });
+}
 
 (function () {
     var rangeHolders = document.querySelectorAll(".rangeHolder");
+    var triggerChange = function triggerChange(element) {
+        var legends = element.querySelectorAll(".legend");
+        var value = parseInt(element.dataset.value, 10) + 1;
+        if (!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+            element.classList.add("redraw");
+            element.classList.remove("redraw");
+        }
+        for (var a = 0; a < legends.length; a++) {
+            if (parseInt(legends[a].className.split(' ').find(function (c) {
+                return (/legend-\d/.test(c)
+                );
+            }).replace(/^\D+/g, ''), 10) < value) {
+                legends[a].classList.remove("deselected");
+            } else {
+                legends[a].classList.add("deselected");
+            }
+        }
+    };
 
     var _loop = function _loop(a) {
+
         var dragging = false;
+        var startX = null;
+        var startY = null;
+
         var rangeHolder = rangeHolders[a];
         var arrowPointer = rangeHolder.querySelector(".arrowPointerFront");
         var pseudoSlider = rangeHolder.querySelector(".pseudoSlider");
+        triggerChange(rangeHolder);
         arrowPointer.addEventListener("click", function (event) {
             var currentValue = parseInt(rangeHolder.dataset.value, 10);
             if (currentValue > 1 && event.offsetX < 20) {
@@ -17,73 +87,38 @@
                 currentValue++;
             }
             rangeHolder.dataset.value = currentValue;
-            triggerIE11(rangeHolder);
+            triggerChange(rangeHolder);
         });
         var headers = rangeHolder.querySelectorAll("header");
         for (var b = 0; b < headers.length; b++) {
             headers[b].addEventListener("click", function (event) {
                 rangeHolder.dataset.value = parseInt(event.target.textContent, 10);
-                triggerIE11(rangeHolder);
+                triggerChange(rangeHolder);
             });
         }
-        pseudoSlider.addEventListener("mousedown", function (event) {
-            var boundingBox = pseudoSlider.getBoundingClientRect();
-            var startX = boundingBox.x;
-            var startY = boundingBox.y;
-            dragging = true;
-            // pseudoSlider.addEventListener('mousemove', (event) => {
-            //     var pageY = ('pageY' in fix) ? fix.pageY : event.pageY;
-            //     if ('startY' in fix) {
-            //         startY = fix.startY;
-            //     }
-            //     if (false === ('skipY' in fix)) {
-            //         el.style.top = (pageY - startY) + 'px';
-            //     }
-            // });
 
-            // dragging = true;
-            // var left = el.style.left ? parseInt(el.style.left) : 0;
-            // console.log(left)
-            // var top = el.style.top ? parseInt(el.style.top) : 0;
-            // startX = el.pageX - left;
-            // startY = el.pageY - top;
-            // console.log(event);
-            // window.addEventListener('mousemove', function(){
-            //     var fix = {};
-            //     var pageY = ('pageY' in fix) ? fix.pageY : event.pageY;
-            //     if ('startY' in fix) {
-            //         startY = fix.startY;
-            //     }
-            //     if (false === ('skipY' in fix)) {
-            //         el.style.top = (pageY - startY) + 'px';
-            //     }
-            // });
-        });
-        pseudoSlider.addEventListener("mouseup", function (event) {
+        var mouseUp = function mouseUp(event) {
+            console.log("mouseUp event", event);
             dragging = false;
-            console.log(event);
-        });
+            pseudoSlider.removeEventListener('mousemove', mouseMove);
+        };
+        var mouseMove = function mouseMove(event) {
+            console.log("mouseMove event", event);
+        };
+        var mouseDown = function mouseDown(event) {
+            console.log("mouseDown event", event);
+            var boundingBox = pseudoSlider.getBoundingClientRect();
+            startX = boundingBox.x;
+            startY = boundingBox.y;
+            dragging = true;
+            pseudoSlider.addEventListener('mousemove', mouseMove);
+            pseudoSlider.addEventListener('mouseup', mouseUp);
+        };
+        pseudoSlider.addEventListener("mousedown", mouseDown);
     };
 
     for (var a = 0; a < rangeHolders.length; a++) {
         _loop(a);
     }
-    var triggerIE11 = function triggerIE11(el) {
-        if (!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-            el.classList.add("redraw");
-            el.classList.remove("redraw");
-        }
-    };
 })();
-// const drag = (event) => {
-//     console.log("drag", event);
-// };
-// const drop = (event) => {
-//     console.log("drop", event);
-//     event.preventDefault();
-//
-// };
-// const allowDrop = (event) => {
-//     console.log("allowDrop", event);
-// };
 //# sourceMappingURL=range-input.js.map
