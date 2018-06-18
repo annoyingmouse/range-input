@@ -69,15 +69,9 @@ if (!Array.prototype.find) {
     };
 
     var _loop = function _loop(a) {
-
-        var dragging = false;
-        var startX = null;
-        var startY = null;
-
         var rangeHolder = rangeHolders[a];
         var arrowPointer = rangeHolder.querySelector(".arrowPointerFront");
         var sliderHolder = rangeHolder.querySelector(".sliderHolder");
-        var pseudoSlider = rangeHolder.querySelector(".pseudoSlider");
         var pseudoDrag = rangeHolder.querySelector(".pseudoDrag");
         triggerChange(rangeHolder);
         arrowPointer.addEventListener("click", function (event) {
@@ -89,7 +83,7 @@ if (!Array.prototype.find) {
             if (currentValue < 7 && event.offsetX > 20) {
                 currentValue++;
             }
-            rangeHolder.dataset.value = currentValue.toString();;
+            rangeHolder.dataset.value = currentValue.toString();
             triggerChange(rangeHolder);
         });
         var headers = rangeHolder.querySelectorAll("header");
@@ -99,7 +93,6 @@ if (!Array.prototype.find) {
                 triggerChange(rangeHolder);
             });
         }
-
         var mouseUp = function mouseUp(event) {
             pseudoDrag.parentNode.parentNode.removeEventListener('mousemove', mouseMove);
             sliderHolder.removeAttribute("style");

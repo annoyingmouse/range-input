@@ -63,15 +63,9 @@ if (!Array.prototype.find) {
         }
     };
     for(let a = 0; a < rangeHolders.length; a++){
-
-        let dragging = false;
-        let startX = null;
-        let startY = null;
-
         const rangeHolder = rangeHolders[a];
         const arrowPointer = rangeHolder.querySelector(".arrowPointerFront");
         const sliderHolder = rangeHolder.querySelector(".sliderHolder");
-        const pseudoSlider = rangeHolder.querySelector(".pseudoSlider");
         const pseudoDrag = rangeHolder.querySelector(".pseudoDrag");
         triggerChange(rangeHolder);
         arrowPointer.addEventListener("click", (event) => {
@@ -83,7 +77,7 @@ if (!Array.prototype.find) {
             if(currentValue < 7 && event.offsetX > 20){
                 currentValue++;
             }
-            rangeHolder.dataset.value = currentValue.toString();;
+            rangeHolder.dataset.value = currentValue.toString();
             triggerChange(rangeHolder);
         });
         const headers = rangeHolder.querySelectorAll("header");
@@ -93,7 +87,6 @@ if (!Array.prototype.find) {
                 triggerChange(rangeHolder);
             });
         }
-
         const mouseUp = (event) => {
             pseudoDrag.parentNode.parentNode.removeEventListener('mousemove', mouseMove);
             sliderHolder.removeAttribute("style");
@@ -112,8 +105,6 @@ if (!Array.prototype.find) {
         console.log(pseudoDrag);
         pseudoDrag.addEventListener("mousedown", mouseDown);
     }
-
-
 })();
 
 

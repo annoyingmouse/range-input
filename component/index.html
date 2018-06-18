@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Slider Compoennt</title>
+        <link href="../style/range-input.css" rel="stylesheet"/>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <slider-input :data-value="5" :min="1" :max="7"></slider-input>
+        </div>
+        <script>
+            Vue.component("slider-input", {
+                template: `
+                    <div class="rangeHolder" :data-value="value">
+                        <div class="legendHolder">
+                            <div class="legend legend-1" :class="{ deselected: value < 1 }">
+                                <header>1</header>
+                            </div>
+                            <div class="legend legend-2" :class="{ deselected: value < 2 }">
+                                <header>2</header>
+                            </div>
+                            <div class="legend legend-3" :class="{ deselected: value < 3 }">
+                                <header>3</header>
+                            </div>
+                            <div class="legend legend-4" :class="{ deselected: value < 4 }">
+                                <header>4</header>
+                            </div>
+                            <div class="legend legend-5" :class="{ deselected: value < 5 }">
+                                <header>5</header>
+                            </div>
+                            <div class="legend legend-6" :class="{ deselected: value < 6 }">
+                                <header>6</header>
+                            </div>
+                            <div class="legend legend-7" :class="{ deselected: value < 7 }">
+                                <header>7</header>
+                            </div>
+                        </div>
+                        <div class="sliderHolder">
+                            <div class="arrowPointerBack"></div>
+                            <div class="pseudoSlider" @mousedown="startDrag"></div>
+                            <div class="pseudoDrag"></div>
+                            <div class="arrowPointerFront" @click="arrowClick"></div>
+                        </div>
+                    </div>
+                `,
+                props:{
+                    dataValue: {
+                        required: true,
+                        type: Number
+                    },
+                    min: {
+                        required: false,
+                        type: Number,
+                        default: 1
+                    },
+                    max: {
+                        required: false,
+                        type: Number,
+                        default: 7
+                    }
+                },
+                data: function(){
+                    return {
+                        value: this.dataValue
+                    }
+                },
+                methods: {
+                    arrowClick: function(event) {
+                        if(this.value > this.min && event.offsetX < 15){
+                            this.value--;
+                        }
+                        if(this.value < this.max && event.offsetX >= 15){
+                            this.value++;
+                        }
+                    },
+                    startDrag: function()
+                },
+                watch: {
+
+                }
+            });
+
+            // create a new Vue instance and mount it to our div element above with the id of app
+            const vm = new Vue({
+                el: "#app"
+            });
+
+
+        </script>
+    </body>
+</html>

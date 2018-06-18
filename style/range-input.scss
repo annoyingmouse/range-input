@@ -6,7 +6,7 @@ $deselected-colour: #7f8c8d;
 .rangeHolder {
     position: relative;
     width: $range-width;
-    height: $range-width / 7;
+    height: $range-height;
     font-family: Arial, Helvetica, sans-serif;
     .legendHolder {
         position: absolute;
