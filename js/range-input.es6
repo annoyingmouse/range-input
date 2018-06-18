@@ -70,9 +70,12 @@ if (!Array.prototype.find) {
 
         const rangeHolder = rangeHolders[a];
         const arrowPointer = rangeHolder.querySelector(".arrowPointerFront");
+        const sliderHolder = rangeHolder.querySelector(".sliderHolder");
         const pseudoSlider = rangeHolder.querySelector(".pseudoSlider");
+        const pseudoDrag = rangeHolder.querySelector(".pseudoDrag");
         triggerChange(rangeHolder);
         arrowPointer.addEventListener("click", (event) => {
+            event.stopPropagation();
             let currentValue = parseInt(rangeHolder.dataset.value, 10);
             if(currentValue > 1 && event.offsetX < 20){
                 currentValue--;
@@ -80,7 +83,7 @@ if (!Array.prototype.find) {
             if(currentValue < 7 && event.offsetX > 20){
                 currentValue++;
             }
-            rangeHolder.dataset.value = currentValue;
+            rangeHolder.dataset.value = currentValue.toString();;
             triggerChange(rangeHolder);
         });
         const headers = rangeHolder.querySelectorAll("header");
@@ -92,23 +95,22 @@ if (!Array.prototype.find) {
         }
 
         const mouseUp = (event) => {
-            console.log("mouseUp event", event);
-            dragging = false;
-            pseudoSlider.removeEventListener('mousemove', mouseMove);
+            pseudoDrag.parentNode.parentNode.removeEventListener('mousemove', mouseMove);
+            sliderHolder.removeAttribute("style");
+            rangeHolder.dataset.value = Math.round(event.clientX / 140).toString();
+            triggerChange(rangeHolder);
         };
         const mouseMove = (event) => {
-            console.log("mouseMove event", event);
+            sliderHolder.style.left = `${event.clientX}px`;
+            rangeHolder.dataset.value = Math.round(event.clientX / 140).toString();
+            triggerChange(rangeHolder);
         };
         const mouseDown = (event) => {
-            console.log("mouseDown event", event);
-            const boundingBox = pseudoSlider.getBoundingClientRect();
-            startX = boundingBox.x;
-            startY = boundingBox.y;
-            dragging = true;
-            pseudoSlider.addEventListener('mousemove', mouseMove);
-            pseudoSlider.addEventListener('mouseup', mouseUp);
+            pseudoDrag.parentNode.parentNode.addEventListener('mousemove', mouseMove);
+            pseudoDrag.parentNode.parentNode.addEventListener('mouseup', mouseUp);
         };
-        pseudoSlider.addEventListener("mousedown", mouseDown);
+        console.log(pseudoDrag);
+        pseudoDrag.addEventListener("mousedown", mouseDown);
     }
 
 
