@@ -5,76 +5,77 @@
         <title>Slider Compoennt</title>
         <link href="../style/range-input.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
     </head>
     <body>
         <div id="app">
-            <slider-input :data-value="5" :primary="'Impact'" :secondary="'AVAILABILITY'"></slider-input>
+            <slider-input :data-value="5" :primary="'Likelihood'"></slider-input>
             <hr>
-            <slider-input :data-value="5" :primary="'Impact'" :secondary="'AVAILABILITY'"></slider-input>
-            <hr>
-            <slider-input :data-value="5" :primary="'Impact'" :secondary="'AVAILABILITY'"></slider-input>
-            <hr>
-            <slider-input :data-value="5" :primary="'Impact'" :secondary="'AVAILABILITY'"></slider-input>
-            <hr>
-            <slider-input :data-value="5" :primary="'Impact'" :secondary="'AVAILABILITY'"></slider-input>
-            <hr>
-            <slider-input :data-value="5" :primary="'Impact'" :secondary="'AVAILABILITY'"></slider-input>
-            <hr>
-            <slider-input :data-value="5" :primary="'Impact'" :secondary="'AVAILABILITY'"></slider-input>
-
+            <slider-input :data-value="5" :primary="'Impact'"></slider-input>
         </div>
-        <script>
-            Vue.component("slider-input", {
-                template: `
-                    <div class="rangeHolder" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp">
-                        <div class="legendHolder">
-                            <div class="legend legend-1" :class="{ deselected: value < 1 }">
-                                <header @click="headerClick">1</header>
-                                <div class="legendBody">{{scale[0]}}</div>
-                            </div>
-                            <div class="legend legend-2" :class="{ deselected: value < 2 }">
-                                <header @click="headerClick">2</header>
-                                <div class="legendBody">{{scale[1]}}</div>
-                            </div>
-                            <div class="legend legend-3" :class="{ deselected: value < 3 }">
-                                <header @click="headerClick">3</header>
-                                <div class="legendBody">{{scale[2]}}</div>
-                            </div>
-                            <div class="legend legend-4" :class="{ deselected: value < 4 }">
-                                <header @click="headerClick">4</header>
-                                <div class="legendBody">{{scale[3]}}</div>
-                            </div>
-                            <div class="legend legend-5" :class="{ deselected: value < 5 }">
-                                <header @click="headerClick">5</header>
-                                <div class="legendBody">{{scale[4]}}</div>
-                            </div>
-                            <div class="legend legend-6" :class="{ deselected: value < 6 }">
-                                <header @click="headerClick">6</header>
-                                <div class="legendBody">{{scale[5]}}</div>
-                            </div>
-                            <div class="legend legend-7" :class="{ deselected: value < 7 }">
-                                <header @click="headerClick">7</header>
-                                <div class="legendBody">{{scale[6]}}</div>
-                            </div>
-                        </div>
-                        <div class="sliderHolder" :style="leftOffset">
-                            <div class="arrowPointerBack"></div>
-                            <div class="pseudoSlider"></div>
-                            <div class="pseudoDrag" @mousedown="startDrag"></div>
-                            <div class="arrowPointerFront" @click="arrowClick"></div>
+        <template id="slider-input" style="display: none;">
+            <div class="rangeHolder" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp">
+                <div class="legendHolder">
+                    <div class="legend legend-1" :class="{ deselected: value < 1 }">
+                        <header @click="headerClick">1</header>
+                        <div class="legendBody">
+                            <span>{{scale[0]}}</span>
                         </div>
                     </div>
-                `,
+                    <div class="legend legend-2" :class="{ deselected: value < 2 }">
+                        <header @click="headerClick">2</header>
+                        <div class="legendBody">
+                            <span>{{scale[1]}}</span>
+                        </div>
+                    </div>
+                    <div class="legend legend-3" :class="{ deselected: value < 3 }">
+                        <header @click="headerClick">3</header>
+                        <div class="legendBody">
+                            <span>{{scale[2]}}</span>
+                        </div>
+                    </div>
+                    <div class="legend legend-4" :class="{ deselected: value < 4 }">
+                        <header @click="headerClick">4</header>
+                        <div class="legendBody">
+                            <span>{{scale[3]}}</span>
+                        </div>
+                    </div>
+                    <div class="legend legend-5" :class="{ deselected: value < 5 }">
+                        <header @click="headerClick">5</header>
+                        <div class="legendBody">
+                            <span>{{scale[4]}}</span>
+                        </div>
+                    </div>
+                    <div class="legend legend-6" :class="{ deselected: value < 6 }">
+                        <header @click="headerClick">6</header>
+                        <div class="legendBody">
+                            <span>{{scale[5]}}</span>
+                        </div>
+                    </div>
+                    <div class="legend legend-7" :class="{ deselected: value < 7 }">
+                        <header @click="headerClick">7</header>
+                        <div class="legendBody">
+                            <span>{{scale[6]}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sliderHolder" :style="leftOffset">
+                    <div class="arrowPointerBack"></div>
+                    <div class="pseudoSlider"></div>
+                    <div class="pseudoDrag" @mousedown="startDrag"></div>
+                    <div class="arrowPointerFront" @click="arrowClick"></div>
+                </div>
+            </div>
+        </template>
+        <script>
+            Vue.component("slider-input", {
+                template: "#slider-input",
                 props:{
                     dataValue: {
                         required: true,
                         type: Number
                     },
                     primary: {
-                        required: true,
-                        type: String
-                    },
-                    secondary: {
                         required: true,
                         type: String
                     }
@@ -85,50 +86,24 @@
                         leftOffset: "",
                         dragging: false,
                         scales: {
-                            "Likelihood": {
-                                "GENERAL":[
-                                    ["Almost impossible","Highly unlikely","Unlikely","Plausible","Likely","Highly likely","Almost certain"],
-                                    ["Almost impossible","Highly unlikely","Unlikely","Likely","Highly likely","Almost certain"],
-                                    ["Highly unlikely","Unlikely","Plausible","Likely","Highly likely"],
-                                    ["Highly unlikely","Unlikely","Likely","Highly likely"],
-                                    ["Unlikely","Plausible","Likely"]
-                                ]
-                            },
-                            "Impact": {
-                                "GENERAL": [
-                                    ["Negligible","Very low","Low","Medium","High","Very high","Critical"],
-                                    ["Negligible","Very low","Low","High","Very high","Critical"],
-                                    ["Very low","Low","Medium","High","Very high"],
-                                    ["Very low","Low","High","Very high"],
-                                    ["Low","Medium","High"]
-                                ],
-                                "CONFIDENTIALITY": [
-                                    ["Minimal amount of non-sensitive data disclosed","Minimal amount of sensitive data exposed","Minimal amount of critical data exposed","Extensive amount of non-sensitive data disclosed","Extensive amount of sensitive data disclosed","Extensive amount of critical data disclosed","All data disclosed"],
-                                    ["Minimal amount of non-sensitive data disclosed","Minimal amount of sensitive data exposed","Minimal amount of critical data exposed","Extensive amount of sensitive data disclosed","Extensive amount of critical data disclosed","All data disclosed"],
-                                    ["Minimal amount of sensitive data exposed","Minimal amount of critical data exposed","Extensive amount of non-sensitive data disclosed","Extensive amount of sensitive data disclosed","Extensive amount of critical data disclosed"],
-                                    ["Minimal amount of sensitive data exposed","Minimal amount of critical data exposed","Extensive amount of sensitive data disclosed","Extensive amount of critical data disclosed"],
-                                    ["Minimal amount of critical data exposed","Extensive amount of non-sensitive data disclosed","Extensive amount of sensitive data disclosed"],
-                                ],
-                                "INTEGRITY": [
-                                    ["Minimal amount of data slightly corrupt","Minimal amount of data partly corrupt","Minimal amount of data seriously corrupt","Extensive amount of data slightly corrupt","Extensive amount of data partly corrupt","Extensive amount of data seriously corrupt","All data corrupt"],
-                                    ["Minimal amount of data slightly corrupt","Minimal amount of data partly corrupt","Minimal amount of data seriously corrupt","Extensive amount of data partly corrupt","Extensive amount of data seriously corrupt","All data corrupt"],
-                                    ["Minimal amount of data partly corrupt","Minimal amount of data seriously corrupt","Extensive amount of data slightly corrupt","Extensive amount of data partly corrupt","Extensive amount of data seriously corrupt"],
-                                    ["Minimal amount of data partly corrupt","Minimal amount of data seriously corrupt","Extensive amount of data partly corrupt","Extensive amount of data seriously corrupt"],
-                                    ["Minimal amount of data seriously corrupt","Extensive amount of data slightly corrupt","Extensive amount of data partly corrupt"]
-                                ],
-                                "AVAILABILITY": [
-                                    ["Secondary services minimally interrupted","Secondary services partly interrupted","Secondary services extensively interrupted","Primary services minimally interrupted","Primary services partly interrupted","Primary services extensively interrupted","All systems lost"],
-                                    ["Secondary services minimally interrupted","Secondary services partly interrupted","Secondary services extensively interrupted","Primary services partly interrupted","Primary services extensively interrupted","All systems lost"],
-                                    ["Secondary services partly interrupted","Secondary services extensively interrupted","Primary services minimally interrupted","Primary services partly interrupted","Primary services extensively interrupted"],
-                                    ["Secondary services partly interrupted","Secondary services extensively interrupted","Primary services partly interrupted","Primary services extensively interrupted"],
-                                    ["Secondary services extensively interrupted","Primary services minimally interrupted","Primary services partly interrupted"]
-                                ]
-                            }
+                            "Likelihood": [
+                                ["Almost impossible", "Highly unlikely", "Unlikely", "Plausible", "Likely", "Highly likely", "Almost certain"],
+                                ["Almost impossible", "Highly unlikely", "Unlikely", "Likely", "Highly likely", "Almost certain"],
+                                ["Highly unlikely", "Unlikely", "Plausible", "Likely", "Highly likely"],
+                                ["Highly unlikely", "Unlikely", "Likely", "Highly likely"],
+                                ["Unlikely", "Plausible", "Likely"]
+                            ],
+                            "Impact": [
+                                ["Negligible", "Very low", "Low", "Medium", "High", "Very high", "Critical"],
+                                ["Negligible", "Very low", "Low", "High", "Very high", "Critical"],
+                                ["Very low", "Low", "Medium", "High", "Very high"],
+                                ["Very low", "Low", "High", "Very high"],
+                                ["Low", "Medium", "High"]
+                            ]
                         },
                         min: 1,
                         max: 7,
                         scale: []
-
                     }
                 },
                 methods: {
@@ -146,8 +121,8 @@
                     mouseMove: function(event){
                         if(this.dragging){
                             if(Math.round(event.clientX / 140) >= this.min && Math.round(event.clientX / 140) <= this.max){
-                                this.leftOffset = `left: ${event.clientX - 10}px`;
-                                this.value = Math.round(event.clientX / 140)
+                                this.leftOffset = "left: " + (event.clientX - 10) + "px";
+                                this.value = Math.round(event.clientX / 140);
                             }
                         }
                     },
@@ -166,24 +141,28 @@
                 },
                 watch: {
                     value: function(val){
-                        var arr = this.scales[this.primary][this.secondary];
-                        this.scale = arr.find(c => c.length === val);
+                        this.scale = _.find(this.scales[this.primary], function(c){
+                            return c.length === val
+                        });
                     }
                 },
-                mounted: function(val){
-                    var arr = this.scales[this.primary][this.secondary];
-                    this.max = arr[arr.map(a => a.slice().length).indexOf(Math.max.apply(Math, arr.map(a => a.slice().length)))].length;
-                    this.min = arr[arr.map(a => a.slice().length).indexOf(Math.min.apply(Math, arr.map(a => a.slice().length)))].length;
-                    this.scale = arr.find(c => c.length === this.value);
+                mounted: function(){
+                    var self = this;
+                    this.max = _.max(this.scales[this.primary], function(c){
+                        return c.length;
+                    }).length;
+                    this.min = _.min(this.scales[this.primary], function(c){
+                        return c.length;
+                    }).length;
+                    this.scale = _.find(this.scales[this.primary].slice(), function(c){
+                        return c.length === self.dataValue
+                    });
                 }
             });
-
             // create a new Vue instance and mount it to our div element above with the id of app
             const vm = new Vue({
                 el: "#app"
             });
-
-
         </script>
     </body>
 </html>
