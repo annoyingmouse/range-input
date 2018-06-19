@@ -21,49 +21,70 @@
         font-size: 1.5em;
         font-weight: bold;
         color: white;
-        margin: 5px 0 0 10px; }
+        margin: 5px 0 0 15px; }
+      .rangeHolder .legendHolder .legend .legendBody {
+        left: 0;
+        bottom: 0;
+        font-size: 0.8em;
+        font-weight: bold;
+        color: black;
+        margin: 5px 0 0 15px; }
     .rangeHolder .legendHolder .legend-1 {
       background: #afd6f3; }
       .rangeHolder .legendHolder .legend-1.deselected {
         background: #d0d5d5; }
         .rangeHolder .legendHolder .legend-1.deselected header {
           opacity: 0.3; }
+        .rangeHolder .legendHolder .legend-1.deselected .legendBody {
+          display: none; }
     .rangeHolder .legendHolder .legend-2 {
       background: #99caef; }
       .rangeHolder .legendHolder .legend-2.deselected {
         background: #c2c9c9; }
         .rangeHolder .legendHolder .legend-2.deselected header {
           opacity: 0.3; }
+        .rangeHolder .legendHolder .legend-2.deselected .legendBody {
+          display: none; }
     .rangeHolder .legendHolder .legend-3 {
       background: #83bfec; }
       .rangeHolder .legendHolder .legend-3.deselected {
         background: #b5bcbd; }
         .rangeHolder .legendHolder .legend-3.deselected header {
           opacity: 0.3; }
+        .rangeHolder .legendHolder .legend-3.deselected .legendBody {
+          display: none; }
     .rangeHolder .legendHolder .legend-4 {
       background: #6db3e8; }
       .rangeHolder .legendHolder .legend-4.deselected {
         background: #a7b0b1; }
         .rangeHolder .legendHolder .legend-4.deselected header {
           opacity: 0.3; }
+        .rangeHolder .legendHolder .legend-4.deselected .legendBody {
+          display: none; }
     .rangeHolder .legendHolder .legend-5 {
       background: #57a8e5; }
       .rangeHolder .legendHolder .legend-5.deselected {
         background: #9aa4a5; }
         .rangeHolder .legendHolder .legend-5.deselected header {
           opacity: 0.3; }
+        .rangeHolder .legendHolder .legend-5.deselected .legendBody {
+          display: none; }
     .rangeHolder .legendHolder .legend-6 {
       background: #419ce1; }
       .rangeHolder .legendHolder .legend-6.deselected {
         background: #8c9899; }
         .rangeHolder .legendHolder .legend-6.deselected header {
           opacity: 0.3; }
+        .rangeHolder .legendHolder .legend-6.deselected .legendBody {
+          display: none; }
     .rangeHolder .legendHolder .legend-7 {
       background: #2b91de; }
       .rangeHolder .legendHolder .legend-7.deselected {
         background: #7f8c8d; }
         .rangeHolder .legendHolder .legend-7.deselected header {
           opacity: 0.3; }
+        .rangeHolder .legendHolder .legend-7.deselected .legendBody {
+          display: none; }
   .rangeHolder[data-value="1"] .sliderHolder {
     left: 140px; }
     .rangeHolder[data-value="1"] .sliderHolder .pseudoSlider {
