@@ -1,11 +1,11 @@
-.rangeHolder {
+.sliderContainer {
   position: relative;
-  width: 980px;
+  width: 100%;
   height: 100px;
   font-family: Arial, Helvetica, sans-serif; }
-  .rangeHolder .legendHolder {
+  .sliderContainer .legendHolder {
     position: absolute;
-    width: 980px;
+    width: 100%;
     height: 100px;
     top: 0;
     left: 0;
@@ -13,112 +13,112 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start; }
-    .rangeHolder .legendHolder .legend {
-      width: 140px;
+    .sliderContainer .legendHolder .legend {
+      width: 14.2857142857%;
       height: 100px; }
-      .rangeHolder .legendHolder .legend header {
+      .sliderContainer .legendHolder .legend header {
         cursor: pointer;
         font-size: 1.5em;
         font-weight: bold;
         color: white;
-        margin: 5px 0 0 15px; }
-      .rangeHolder .legendHolder .legend .legendBody {
+        margin: 6px 0 0 12px; }
+      .sliderContainer .legendHolder .legend .legendBody {
         font-size: 1.2em;
         font-weight: bold;
         color: black;
-        margin: 5px 15px;
+        margin: 6px 12px;
         height: 50px;
         display: flex; }
-        .rangeHolder .legendHolder .legend .legendBody span {
+        .sliderContainer .legendHolder .legend .legendBody span {
           align-self: flex-end; }
-    .rangeHolder .legendHolder .legend-1 {
+    .sliderContainer .legendHolder .legend-1 {
       background: #afd6f3; }
-      .rangeHolder .legendHolder .legend-1.deselected {
+      .sliderContainer .legendHolder .legend-1.deselected {
         background: #d0d5d5; }
-        .rangeHolder .legendHolder .legend-1.deselected header {
+        .sliderContainer .legendHolder .legend-1.deselected header {
           opacity: 0.3; }
-        .rangeHolder .legendHolder .legend-1.deselected .legendBody {
+        .sliderContainer .legendHolder .legend-1.deselected .legendBody {
           display: none; }
-    .rangeHolder .legendHolder .legend-2 {
+    .sliderContainer .legendHolder .legend-2 {
       background: #99caef; }
-      .rangeHolder .legendHolder .legend-2.deselected {
+      .sliderContainer .legendHolder .legend-2.deselected {
         background: #c2c9c9; }
-        .rangeHolder .legendHolder .legend-2.deselected header {
+        .sliderContainer .legendHolder .legend-2.deselected header {
           opacity: 0.3; }
-        .rangeHolder .legendHolder .legend-2.deselected .legendBody {
+        .sliderContainer .legendHolder .legend-2.deselected .legendBody {
           display: none; }
-    .rangeHolder .legendHolder .legend-3 {
+    .sliderContainer .legendHolder .legend-3 {
       background: #83bfec; }
-      .rangeHolder .legendHolder .legend-3.deselected {
+      .sliderContainer .legendHolder .legend-3.deselected {
         background: #b5bcbd; }
-        .rangeHolder .legendHolder .legend-3.deselected header {
+        .sliderContainer .legendHolder .legend-3.deselected header {
           opacity: 0.3; }
-        .rangeHolder .legendHolder .legend-3.deselected .legendBody {
+        .sliderContainer .legendHolder .legend-3.deselected .legendBody {
           display: none; }
-    .rangeHolder .legendHolder .legend-4 {
+    .sliderContainer .legendHolder .legend-4 {
       background: #6db3e8; }
-      .rangeHolder .legendHolder .legend-4.deselected {
+      .sliderContainer .legendHolder .legend-4.deselected {
         background: #a7b0b1; }
-        .rangeHolder .legendHolder .legend-4.deselected header {
+        .sliderContainer .legendHolder .legend-4.deselected header {
           opacity: 0.3; }
-        .rangeHolder .legendHolder .legend-4.deselected .legendBody {
+        .sliderContainer .legendHolder .legend-4.deselected .legendBody {
           display: none; }
-    .rangeHolder .legendHolder .legend-5 {
+    .sliderContainer .legendHolder .legend-5 {
       background: #57a8e5; }
-      .rangeHolder .legendHolder .legend-5.deselected {
+      .sliderContainer .legendHolder .legend-5.deselected {
         background: #9aa4a5; }
-        .rangeHolder .legendHolder .legend-5.deselected header {
+        .sliderContainer .legendHolder .legend-5.deselected header {
           opacity: 0.3; }
-        .rangeHolder .legendHolder .legend-5.deselected .legendBody {
+        .sliderContainer .legendHolder .legend-5.deselected .legendBody {
           display: none; }
-    .rangeHolder .legendHolder .legend-6 {
+    .sliderContainer .legendHolder .legend-6 {
       background: #419ce1; }
-      .rangeHolder .legendHolder .legend-6.deselected {
+      .sliderContainer .legendHolder .legend-6.deselected {
         background: #8c9899; }
-        .rangeHolder .legendHolder .legend-6.deselected header {
+        .sliderContainer .legendHolder .legend-6.deselected header {
           opacity: 0.3; }
-        .rangeHolder .legendHolder .legend-6.deselected .legendBody {
+        .sliderContainer .legendHolder .legend-6.deselected .legendBody {
           display: none; }
-    .rangeHolder .legendHolder .legend-7 {
+    .sliderContainer .legendHolder .legend-7 {
       background: #2b91de; }
-      .rangeHolder .legendHolder .legend-7.deselected {
+      .sliderContainer .legendHolder .legend-7.deselected {
         background: #7f8c8d; }
-        .rangeHolder .legendHolder .legend-7.deselected header {
+        .sliderContainer .legendHolder .legend-7.deselected header {
           opacity: 0.3; }
-        .rangeHolder .legendHolder .legend-7.deselected .legendBody {
+        .sliderContainer .legendHolder .legend-7.deselected .legendBody {
           display: none; }
-  .rangeHolder[data-value="1"] .sliderHolder {
-    left: 140px; }
-    .rangeHolder[data-value="1"] .sliderHolder .pseudoSlider {
+  .sliderContainer[data-value="1"] .sliderHolder {
+    left: 14.2857142857%; }
+    .sliderContainer[data-value="1"] .sliderHolder .pseudoSlider {
       background: linear-gradient(to right, #afd6f3, #afd6f3 70%, white 70%, white); }
-  .rangeHolder[data-value="2"] .sliderHolder {
-    left: 280px; }
-    .rangeHolder[data-value="2"] .sliderHolder .pseudoSlider {
+  .sliderContainer[data-value="2"] .sliderHolder {
+    left: 28.5714285714%; }
+    .sliderContainer[data-value="2"] .sliderHolder .pseudoSlider {
       background: linear-gradient(to right, #99caef, #99caef 70%, white 70%, white); }
-  .rangeHolder[data-value="3"] .sliderHolder {
-    left: 420px; }
-    .rangeHolder[data-value="3"] .sliderHolder .pseudoSlider {
+  .sliderContainer[data-value="3"] .sliderHolder {
+    left: 42.8571428571%; }
+    .sliderContainer[data-value="3"] .sliderHolder .pseudoSlider {
       background: linear-gradient(to right, #83bfec, #83bfec 70%, white 70%, white); }
-  .rangeHolder[data-value="4"] .sliderHolder {
-    left: 560px; }
-    .rangeHolder[data-value="4"] .sliderHolder .pseudoSlider {
+  .sliderContainer[data-value="4"] .sliderHolder {
+    left: 57.1428571429%; }
+    .sliderContainer[data-value="4"] .sliderHolder .pseudoSlider {
       background: linear-gradient(to right, #6db3e8, #6db3e8 70%, white 70%, white); }
-  .rangeHolder[data-value="5"] .sliderHolder {
-    left: 700px; }
-    .rangeHolder[data-value="5"] .sliderHolder .pseudoSlider {
+  .sliderContainer[data-value="5"] .sliderHolder {
+    left: 71.4285714286%; }
+    .sliderContainer[data-value="5"] .sliderHolder .pseudoSlider {
       background: linear-gradient(to right, #57a8e5, #57a8e5 70%, white 70%, white); }
-  .rangeHolder[data-value="6"] .sliderHolder {
-    left: 840px; }
-    .rangeHolder[data-value="6"] .sliderHolder .pseudoSlider {
+  .sliderContainer[data-value="6"] .sliderHolder {
+    left: 85.7142857143%; }
+    .sliderContainer[data-value="6"] .sliderHolder .pseudoSlider {
       background: linear-gradient(to right, #419ce1, #419ce1 70%, white 70%, white); }
-  .rangeHolder[data-value="7"] .sliderHolder {
-    left: 980px; }
-    .rangeHolder[data-value="7"] .sliderHolder .pseudoSlider {
+  .sliderContainer[data-value="7"] .sliderHolder {
+    left: 100%; }
+    .sliderContainer[data-value="7"] .sliderHolder .pseudoSlider {
       background: linear-gradient(to right, #2b91de, #2b91de 70%, white 70%, white); }
-  .rangeHolder .sliderHolder {
+  .sliderContainer .sliderHolder {
     position: absolute;
     top: -10px; }
-    .rangeHolder .sliderHolder .arrowPointerBack {
+    .sliderContainer .sliderHolder .arrowPointerBack {
       position: absolute;
       height: 20px;
       width: 20px;
@@ -127,20 +127,20 @@
       background: white;
       transform: rotate(45deg);
       transform-origin: center center; }
-    .rangeHolder .sliderHolder .pseudoSlider {
+    .sliderContainer .sliderHolder .pseudoSlider {
       position: absolute;
       height: 120px;
       width: 10px;
       left: -5px;
       cursor: e-resize; }
-    .rangeHolder .sliderHolder .pseudoDrag {
+    .sliderContainer .sliderHolder .pseudoDrag {
       position: absolute;
       height: 120px;
       width: 30px;
       left: -15px;
       cursor: e-resize;
       background: none; }
-    .rangeHolder .sliderHolder .arrowPointerFront {
+    .sliderContainer .sliderHolder .arrowPointerFront {
       cursor: pointer;
       position: absolute;
       height: 30px;

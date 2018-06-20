@@ -1,9 +1,13 @@
-$range-width: 980px;
+// From main application
+$color-brand: #2b91de;
+$darkgrey: #7f8c8d;
+$gutterwidth: 24px;
+
+// Slider specific
+$range-width: 100%;
 $range-height: 100px;
 $gradient-position: 70%;
-$primary-colour: #2b91de;
-$deselected-colour: #7f8c8d;
-.rangeHolder {
+.sliderContainer {
     position: relative;
     width: $range-width;
     height: $range-height;
@@ -26,13 +30,13 @@ $deselected-colour: #7f8c8d;
                 font-size: 1.5em;
                 font-weight: bold;
                 color: white;
-                margin: 5px 0 0 15px;
+                margin: $gutterwidth / 4 0 0 $gutterwidth / 2;
             }
             & .legendBody{
                 font-size: 1.2em;
                 font-weight: bold;
                 color: black;
-                margin: 5px 15px;
+                margin: $gutterwidth / 4 $gutterwidth / 2;
                 height: 50px;
                 display: flex;
                 & span {
@@ -42,9 +46,9 @@ $deselected-colour: #7f8c8d;
         }
         @for $i from 1 through 7 {
             .legend-#{$i} {
-                background: lighten($primary-colour, percentage(abs(($i - 7) * 5 ) / 100));
+                background: lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100));
                 &.deselected {
-                    background: lighten($deselected-colour, percentage(abs(($i - 7) * 5 ) / 100));
+                    background: lighten($darkgrey, percentage(abs(($i - 7) * 5 ) / 100));
                     & header{
                         opacity: 0.3;
                     }
@@ -59,12 +63,12 @@ $deselected-colour: #7f8c8d;
     @for $i from 1 through 7 {
         &[data-value="#{$i}"] {
             .sliderHolder {
-                left: 140px * $i;
+                left: ($range-width / 7) * $i;
                 .pseudoSlider {
                     background: linear-gradient(
                         to right,
-                        lighten($primary-colour, percentage(abs(($i - 7) * 5 ) / 100)),
-                        lighten($primary-colour, percentage(abs(($i - 7) * 5 ) / 100)) $gradient-position,
+                        lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100)),
+                        lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100)) $gradient-position,
                         white $gradient-position,
                         white);
                 }

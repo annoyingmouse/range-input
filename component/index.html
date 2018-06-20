@@ -9,12 +9,10 @@
     </head>
     <body>
         <div id="app">
-            <slider-input :data-value="5" :primary="'Likelihood'"></slider-input>
-            <hr>
-            <slider-input :data-value="5" :primary="'Impact'"></slider-input>
+
         </div>
         <template id="slider-input" style="display: none;">
-            <div class="rangeHolder" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp">
+            <div class="sliderContainer" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp" ref="slider">
                 <div class="legendHolder">
                     <div class="legend legend-1" :class="{ deselected: value < 1 }">
                         <header @click="headerClick">1</header>
@@ -67,6 +65,9 @@
                 </div>
             </div>
         </template>
+        <template id="application" style="display: none;">
+
+        </template>
         <script>
             Vue.component("slider-input", {
                 template: "#slider-input",
@@ -110,9 +111,11 @@
                     arrowClick: function(event) {
                         if(this.value > this.min && event.offsetX < 15){
                             this.value--;
+                            this.$emit('input', this.value);
                         }
                         if(this.value < this.max && event.offsetX >= 15){
                             this.value++;
+                            this.$emit('input', this.value);
                         }
                     },
                     startDrag: function(){
@@ -120,9 +123,11 @@
                     },
                     mouseMove: function(event){
                         if(this.dragging){
-                            if(Math.round(event.clientX / 140) >= this.min && Math.round(event.clientX / 140) <= this.max){
+                            var sliderWidth = this.$refs.slider.offsetWidth / 7;
+                            if(Math.round(event.clientX / sliderWidth) >= this.min && Math.round(event.clientX / sliderWidth) <= this.max){
                                 this.leftOffset = "left: " + (event.clientX - 10) + "px";
-                                this.value = Math.round(event.clientX / 140);
+                                this.value = Math.round(event.clientX / (sliderWidth));
+                                this.$emit('input', this.value);
                             }
                         }
                     },
@@ -136,6 +141,7 @@
                         var newValue = parseInt(event.target.textContent, 10);
                         if(newValue >= this.min && newValue <= this.max){
                             this.value = newValue;
+                            this.$emit('input', this.value);
                         }
                     }
                 },
@@ -161,7 +167,21 @@
             });
             // create a new Vue instance and mount it to our div element above with the id of app
             const vm = new Vue({
-                el: "#app"
+                template: '' +
+                '<div>' +
+                '    <slider-input :dataValue="Likelihood" :primary="\'Likelihood\'" @input="Likelihood = $event"></slider-input>' +
+                '    <hr>' +
+                '    <slider-input :dataValue="Impact" :primary="\'Impact\'" @input="Impact = $event"></slider-input>' +
+                '    <p>Likelihood: {{Likelihood}}</p>' +
+                '    <p>Impact: {{Impact}}</p>' +
+                '</div>',
+                el: "#app",
+                data: function(){
+                    return {
+                        Likelihood: 5,
+                        Impact: 5
+                    }
+                }
             });
         </script>
     </body>
