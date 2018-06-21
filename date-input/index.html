@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Date Input</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+    </head>
+    <body>
+
+
+        <template id="native-datepicker" style="display: none;">
+            <div class="inputgr">
+                <label class="label-active">{{placeholder}}</label>
+                <input type="date"  :data-value="value" v-on:change="dateChange" v-on:keypress="dateChange" v-on:keyup="emitIE11" :min="min"/>
+                <p v-show="localErrors.length" class="formValidationMessage">{{localErrors}}</p>
+            </div>
+        </template>
+        <script>
+            Vue.component('nativedatepicker', {
+                template: '#native-datepicker',
+                props: {
+
+                    placeholder: {
+                        type: String
+                    },
+                    fromToday : {
+                        type: Boolean
+                    },
+                    errorMessage: {
+                        type: String
+                    }
+                },
+                data: function () {
+                    return {
+                        native: null,
+                        min: "",
+                        localErrors: "",
+                        ddmmyyyy: /(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d/
+                    };
+                },
+                computed: {
+                    dateInput: function () {
+                        var timeNow = moment();
+                        if (this.value === null) {
+                            var temp_date = moment().hour(timeNow.hour()).minute(timeNow.minute());
+                            return (this.native) ? temp_date.format("YYYY-MM-DD") : temp_date.format("DD/MM/YYYY");
+                        }
+                        var temp_date = moment(this.value).hour(timeNow.hour()).minute(timeNow.minute());
+                        return (this.native) ? temp_date.format("YYYY-MM-DD") : temp_date.format("DD/MM/YYYY");
+                    }
+                },
+                watch: {
+                },
+                methods: {
+                    dateChange: function(e){
+                        if(this.native){
+                            var timeNow = moment();
+                            var selectedLocalDateTime = moment(e.target.value).hour(timeNow.hour()).minute(timeNow.minute());
+                            var selectedUtcDate = moment.utc(selectedLocalDateTime);
+                            this.$emit("input", selectedUtcDate);
+                        }else{
+                            if(e.keyCode < 46 || e.keyCode > 57) {
+                                e.preventDefault();
+                            }
+                            var len = e.target.value.length;
+                            if(len !== 1 || len !== 3) {
+                                if(e.keyCode == 47) {
+                                    e.preventDefault();
+                                }
+                            }
+                            if(len === 2) {
+                                e.target.value += '/';
+                            }
+                            if(len === 5) {
+                                e.target.value += '/';
+                            }
+                            if(len >= 10){
+                                e.preventDefault();
+                            }
+                        }
+                    },
+                    emitIE11: function(e){
+                        if(!this.native){
+                            if(e.target.value.length === 10 && e.target.value.match(this.ddmmyyyy)){
+                                var timeNow = moment();
+                                var selectedLocalDateTime = moment(e.target.value, "DD/MM/YYYY").hour(timeNow.hour()).minute(timeNow.minute());
+                                var selectedUtcDate = moment.utc(selectedLocalDateTime);
+                                this.$emit("input", selectedUtcDate);
+                            }
+                        }
+                    },
+                    initialize: function () {
+                        // Here we're checking to see if the browser supports date inputs
+                        var el = document.createElement("input");
+                        var invalidVal = "foo";
+                        el.setAttribute("type", "date");
+                        el.setAttribute("value", invalidVal);
+                        if (el.value === invalidVal) {
+                            this.native = false;
+                        }else{
+                            this.native = true;
+                        }
+                        if(this.fromToday){
+                            this.min = moment().format("YYYY-MM-DD");
+                        }
+                    }
+                },
+                mounted: function () {
+                    this.initialize();
+                }
+            });
+            const vm = new Vue({
+                template: '' +
+                '<div>' +
+                '    <nativedatepicker :dataValue="Likelihood" :primary="\'Likelihood\'" @input="Likelihood = $event"></nativedatepicker>' +
+                '    <p>Date: {{Date}}</p>' +
+                '</div>',
+                el: "#app",
+                data: function(){
+                    return {
+                        Date: moment()
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
