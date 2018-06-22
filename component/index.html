@@ -9,8 +9,21 @@
     </head>
     <body>
         <div id="app">
-
+            <slider-input v-model="Likelihood" v-bind:data-scale="[['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],['Highly unlikely','Unlikely','Likely','Highly likely'],['Unlikely','Plausible','Likely']]"></slider-input>
+            <hr>
+            <slider-input v-model="Impact" v-bind:data-scale="[['Negligible','Very low','Low','Medium','High','Very high','Critical'],['Negligible','Very low','Low','High','Very high','Critical'],['Very low','Low','Medium','High','Very high'],['Very low','Low','High','Very high'],['Low','Medium','High']]"></slider-input>
+            <p>Likelihood: {{Likelihood}}</p>
+            <p>Impact: {{Impact}}</p>
         </div>
+        <template id="application" style="display: none;">
+            <div>
+                <slider-input v-model="Likelihood" v-bind:data-scale="[['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],['Highly unlikely','Unlikely','Likely','Highly likely'],['Unlikely','Plausible','Likely']]"></slider-input>
+                <hr>
+                <slider-input v-model="Impact" v-bind:data-scale="[['Negligible','Very low','Low','Medium','High','Very high','Critical'],['Negligible','Very low','Low','High','Very high','Critical'],['Very low','Low','Medium','High','Very high'],['Very low','Low','High','Very high'],['Low','Medium','High']]"></slider-input>
+                <p>Likelihood: {{Likelihood}}</p>
+                <p>Impact: {{Impact}}</p>
+            </div>
+        </template>
         <template id="slider-input" style="display: none;">
             <div class="sliderComponent">
                 <div class="edit">
@@ -70,15 +83,7 @@
                 </div>
             </div>
         </template>
-        <template id="application" style="display: none;">
-            <div>
-                <slider-input :dataValue="Likelihood" :dataScale="[[\'Almost impossible\',\'Highly unlikely\',\'Unlikely\',\'Plausible\',\'Likely\',\'Highly likely\',\'Almost certain\'],[\'Almost impossible\',\'Highly unlikely\',\'Unlikely\',\'Likely\',\'Highly likely\',\'Almost certain\'],[\'Highly unlikely\',\'Unlikely\',\'Plausible\',\'Likely\',\'Highly likely\'],[\'Highly unlikely\',\'Unlikely\',\'Likely\',\'Highly likely\'],[\'Unlikely\',\'Plausible\',\'Likely\']]" @input="Likelihood = $event"></slider-input>
-                <hr>
-                <slider-input :dataValue="Impact" :scale="[[\'Negligible\',\'Very low\',\'Low\',\'Medium\',\'High\',\'Very high\',\'Critical\'],[\'Negligible\',\'Very low\',\'Low\',\'High\',\'Very high\',\'Critical\'],[\'Very low\',\'Low\',\'Medium\',\'High\',\'Very high\'],[\'Very low\',\'Low\',\'High\',\'Very high\'],[\'Low\',\'Medium\',\'High\']]" @input="Impact = $event"></slider-input>
-                <p>Likelihood: {{Likelihood}}</p>
-                <p>Impact: {{Impact}}</p>
-            </div>
-        </template>
+
         <script>
             Vue.component("slider-input", {
                 template: "#slider-input",
@@ -158,14 +163,35 @@
             });
             // create a new Vue instance and mount it to our div element above with the id of app
             const vm = new Vue({
-                template: '' +
-                '<div>' +
-                '    <slider-input v-model="Likelihood" :dataScale="[[\'Almost impossible\',\'Highly unlikely\',\'Unlikely\',\'Plausible\',\'Likely\',\'Highly likely\',\'Almost certain\'],[\'Almost impossible\',\'Highly unlikely\',\'Unlikely\',\'Likely\',\'Highly likely\',\'Almost certain\'],[\'Highly unlikely\',\'Unlikely\',\'Plausible\',\'Likely\',\'Highly likely\'],[\'Highly unlikely\',\'Unlikely\',\'Likely\',\'Highly likely\'],[\'Unlikely\',\'Plausible\',\'Likely\']]"></slider-input>' +
+                /*
+                 * Using inline template (horrible IE11 String)
+                 */
+                // template: '' +
+                // '<div>' +
+                // '    <slider-input v-model="Likelihood" :dataScale="[[\'Almost impossible\',\'Highly unlikely\',\'Unlikely\',\'Plausible\',\'Likely\',\'Highly likely\',\'Almost certain\'],[\'Almost impossible\',\'Highly unlikely\',\'Unlikely\',\'Likely\',\'Highly likely\',\'Almost certain\'],[\'Highly unlikely\',\'Unlikely\',\'Plausible\',\'Likely\',\'Highly likely\'],[\'Highly unlikely\',\'Unlikely\',\'Likely\',\'Highly likely\'],[\'Unlikely\',\'Plausible\',\'Likely\']]"></slider-input>' +
                 // '    <hr>' +
-                // '    <slider-input :dataValue="Impact" :scale="[[\'Negligible\',\'Very low\',\'Low\',\'Medium\',\'High\',\'Very high\',\'Critical\'],[\'Negligible\',\'Very low\',\'Low\',\'High\',\'Very high\',\'Critical\'],[\'Very low\',\'Low\',\'Medium\',\'High\',\'Very high\'],[\'Very low\',\'Low\',\'High\',\'Very high\'],[\'Low\',\'Medium\',\'High\']]" @input="Impact = $event"></slider-input>' +
-                '    <p>Likelihood: {{Likelihood}}</p>' +
-                '    <p>Impact: {{Impact}}</p>' +
-                '</div>',
+                // '    <slider-input v-model="Impact" :dataScale="[[\'Negligible\',\'Very low\',\'Low\',\'Medium\',\'High\',\'Very high\',\'Critical\'],[\'Negligible\',\'Very low\',\'Low\',\'High\',\'Very high\',\'Critical\'],[\'Very low\',\'Low\',\'Medium\',\'High\',\'Very high\'],[\'Very low\',\'Low\',\'High\',\'Very high\'],[\'Low\',\'Medium\',\'High\']]" @input="Impact = $event"></slider-input>' +
+                // '    <p>Likelihood: {{Likelihood}}</p>' +
+                // '    <p>Impact: {{Impact}}</p>' +
+                // '</div>',
+
+                /*
+                 * Using inline template
+                 */
+                // template: `
+                //     <div>
+                //         <slider-input v-model="Likelihood" v-bind:data-scale="[['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],['Highly unlikely','Unlikely','Likely','Highly likely'],['Unlikely','Plausible','Likely']]"></slider-input>
+                //         <hr>
+                //         <slider-input v-model="Impact" v-bind:data-scale="[['Negligible','Very low','Low','Medium','High','Very high','Critical'],['Negligible','Very low','Low','High','Very high','Critical'],['Very low','Low','Medium','High','Very high'],['Very low','Low','High','Very high'],['Low','Medium','High']]"></slider-input>
+                //         <p>Likelihood: {{Likelihood}}</p>
+                //         <p>Impact: {{Impact}}</p>
+                //     </div>
+                // `,
+
+                /*
+                 * Using external template
+                 */
+                // template: "#application",
                 el: "#app",
                 data: function(){
                     return {
