@@ -24,55 +24,30 @@
                 <p>Impact: {{Impact}}</p>
             </div>
         </template>
+        <template id="slider-input-legend" style="display: none;">
+            <div :class="['legend', {'deselected': actualVal < num}, 'legend-' + num ]">
+                <header @click="$emit('legend-click', num)">{{num}}</header>
+                <div class="legendBody">
+                    <span>{{legend}}</span>
+                </div>
+            </div>
+        </template>
+
+
         <template id="slider-input" style="display: none;">
             <div class="sliderComponent">
                 <div class="edit">
 
                 </div>
-                <div class="sliderContainer" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp" ref="slider">
+                <div class="sliderContainer" ref="slider" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp">
                     <div class="legendHolder">
-                        <div class="legend legend-1" :class="{ deselected: value < 1 }">
-                            <header @click="headerClick">1</header>
-                            <div class="legendBody">
-                                <span>{{actualScale[0]}}</span>
-                            </div>
-                        </div>
-                        <div class="legend legend-2" :class="{ deselected: value < 2 }">
-                            <header @click="headerClick">2</header>
-                            <div class="legendBody">
-                                <span>{{actualScale[1]}}</span>
-                            </div>
-                        </div>
-                        <div class="legend legend-3" :class="{ deselected: value < 3 }">
-                            <header @click="headerClick">3</header>
-                            <div class="legendBody">
-                                <span>{{actualScale[2]}}</span>
-                            </div>
-                        </div>
-                        <div class="legend legend-4" :class="{ deselected: value < 4 }">
-                            <header @click="headerClick">4</header>
-                            <div class="legendBody">
-                                <span>{{actualScale[3]}}</span>
-                            </div>
-                        </div>
-                        <div class="legend legend-5" :class="{ deselected: value < 5 }">
-                            <header @click="headerClick">5</header>
-                            <div class="legendBody">
-                                <span>{{actualScale[4]}}</span>
-                            </div>
-                        </div>
-                        <div class="legend legend-6" :class="{ deselected: value < 6 }">
-                            <header @click="headerClick">6</header>
-                            <div class="legendBody">
-                                <span>{{actualScale[5]}}</span>
-                            </div>
-                        </div>
-                        <div class="legend legend-7" :class="{ deselected: value < 7 }">
-                            <header @click="headerClick">7</header>
-                            <div class="legendBody">
-                                <span>{{actualScale[6]}}</span>
-                            </div>
-                        </div>
+                        <slider-input-legend :num="1" :legend="actualScale[0]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
+                        <slider-input-legend :num="2" :legend="actualScale[1]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
+                        <slider-input-legend :num="3" :legend="actualScale[2]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
+                        <slider-input-legend :num="4" :legend="actualScale[3]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
+                        <slider-input-legend :num="5" :legend="actualScale[4]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
+                        <slider-input-legend :num="6" :legend="actualScale[5]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
+                        <slider-input-legend :num="7" :legend="actualScale[6]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
                     </div>
                     <div class="sliderHolder" :style="leftOffset">
                         <div class="arrowPointerBack"></div>
@@ -85,6 +60,25 @@
         </template>
 
         <script>
+            Vue.component("slider-input-legend", {
+                template: "#slider-input-legend",
+                props:{
+                    num: {
+                        required: true,
+                        type: Number
+                    },
+                    legend: {
+                        type: String
+                    },
+                    actualVal: {
+                        required: true,
+                        type: Number
+                    }
+                }
+            });
+
+
+
             Vue.component("slider-input", {
                 template: "#slider-input",
                 props:{
@@ -142,8 +136,7 @@
                             this.leftOffset = "";
                         }
                     },
-                    headerClick: function(event){
-                        var newValue = parseInt(event.target.textContent, 10);
+                    headerClick: function(newValue){
                         if(newValue >= this.min && newValue <= this.max){
                             this.dataValue = newValue;
                         }
@@ -159,7 +152,12 @@
                 },
                 mounted: function(){
 
-                }
+                },
+                events: {
+                    legendClick: function (val) {
+                        console.log(val);
+                    },
+                },
             });
             // create a new Vue instance and mount it to our div element above with the id of app
             const vm = new Vue({
