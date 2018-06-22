@@ -15,15 +15,15 @@
             <p>Likelihood: {{Likelihood}}</p>
             <p>Impact: {{Impact}}</p>
         </div>
-        <template id="application" style="display: none;">
-            <div>
-                <slider-input v-model="Likelihood" v-bind:data-scale="[['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],['Highly unlikely','Unlikely','Likely','Highly likely'],['Unlikely','Plausible','Likely']]"></slider-input>
-                <hr>
-                <slider-input v-model="Impact" v-bind:data-scale="[['Negligible','Very low','Low','Medium','High','Very high','Critical'],['Negligible','Very low','Low','High','Very high','Critical'],['Very low','Low','Medium','High','Very high'],['Very low','Low','High','Very high'],['Low','Medium','High']]"></slider-input>
-                <p>Likelihood: {{Likelihood}}</p>
-                <p>Impact: {{Impact}}</p>
-            </div>
-        </template>
+        <!--<template id="application" style="display: none;">-->
+            <!--<div>-->
+                <!--<slider-input v-model="Likelihood" v-bind:data-scale="[['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],['Highly unlikely','Unlikely','Likely','Highly likely'],['Unlikely','Plausible','Likely']]"></slider-input>-->
+                <!--<hr>-->
+                <!--<slider-input v-model="Impact" v-bind:data-scale="[['Negligible','Very low','Low','Medium','High','Very high','Critical'],['Negligible','Very low','Low','High','Very high','Critical'],['Very low','Low','Medium','High','Very high'],['Very low','Low','High','Very high'],['Low','Medium','High']]"></slider-input>-->
+                <!--<p>Likelihood: {{Likelihood}}</p>-->
+                <!--<p>Impact: {{Impact}}</p>-->
+            <!--</div>-->
+        <!--</template>-->
         <template id="slider-input-legend" style="display: none;">
             <div :class="['legend', {'deselected': actualVal < num}, 'legend-' + num ]">
                 <header @click="$emit('legend-click', num)">{{num}}</header>
@@ -41,13 +41,7 @@
                 </div>
                 <div class="sliderContainer" ref="slider" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp">
                     <div class="legendHolder">
-                        <slider-input-legend :num="1" :legend="actualScale[0]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
-                        <slider-input-legend :num="2" :legend="actualScale[1]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
-                        <slider-input-legend :num="3" :legend="actualScale[2]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
-                        <slider-input-legend :num="4" :legend="actualScale[3]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
-                        <slider-input-legend :num="5" :legend="actualScale[4]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
-                        <slider-input-legend :num="6" :legend="actualScale[5]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
-                        <slider-input-legend :num="7" :legend="actualScale[6]" :actual-val="value" @legend-click="headerClick"></slider-input-legend>
+                        <slider-input-legend v-for="n in 7" :num="n" :legend="actualScale[n-1]" :actual-val="value" @legend-click="headerClick" :key="n"></slider-input-legend>
                     </div>
                     <div class="sliderHolder" :style="leftOffset">
                         <div class="arrowPointerBack"></div>
@@ -76,8 +70,6 @@
                     }
                 }
             });
-
-
 
             Vue.component("slider-input", {
                 template: "#slider-input",
@@ -152,12 +144,7 @@
                 },
                 mounted: function(){
 
-                },
-                events: {
-                    legendClick: function (val) {
-                        console.log(val);
-                    },
-                },
+                }
             });
             // create a new Vue instance and mount it to our div element above with the id of app
             const vm = new Vue({
