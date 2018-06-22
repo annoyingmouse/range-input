@@ -12,123 +12,132 @@ $gutterwidth: 24px;
 $range-width: 100%;
 $range-height: 100px;
 $gradient-position: 70%;
-.sliderContainer {
-    position: relative;
+
+.sliderComponent{
     width: $range-width;
-    height: $range-height;
-    font-family: Arial, Helvetica, sans-serif;
-    .legendHolder {
-        position: absolute;
+    height: $range-height + 20;
+    overflow: hidden;
+    .edit{
+
+    }
+    .sliderContainer {
+        position: relative;
         width: $range-width;
         height: $range-height;
-        top: 0;
-        left: 0;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        .legend {
-            width: $range-width / 7;
+        font-family: Arial, Helvetica, sans-serif;
+        .legendHolder {
+            position: absolute;
+            width: $range-width;
             height: $range-height;
+            top: 0;
+            left: 0;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             flex-wrap: nowrap;
             justify-content: flex-start;
-            align-content: stretch;
-            align-items: flex-start;
-            & header{
-                cursor: pointer;
-                font-size: 2vw;
-                font-weight: bold;
-                color: white;
-                order: 0;
-                flex: 0 1 auto;
-                align-self: stretch;
-                margin: $gutterwidth / 3 $gutterwidth / 3 0 $gutterwidth / 2;
-            }
-            & .legendBody{
-                font-size: 1.6vw;
-                font-weight: bold;
-                color: black;
-                order: 0;
-                flex: 2 1 auto;
-                align-self: stretch;
+            .legend {
+                width: $range-width / 7;
+                height: $range-height;
                 display: flex;
-                margin:  0 $gutterwidth / 3 $gutterwidth / 3 $gutterwidth / 2;
-                & span {
-                    align-self: flex-end;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                align-content: stretch;
+                align-items: flex-start;
+                & header{
+                    cursor: pointer;
+                    font-size: 2vw;
+                    font-weight: bold;
+                    color: white;
+                    order: 0;
+                    flex: 0 1 auto;
+                    align-self: stretch;
+                    margin: $gutterwidth / 3 $gutterwidth / 3 0 $gutterwidth / 2;
+                }
+                & .legendBody{
+                    font-size: 1.6vw;
+                    font-weight: bold;
+                    color: black;
+                    order: 0;
+                    flex: 2 1 auto;
+                    align-self: stretch;
+                    display: flex;
+                    margin:  0 $gutterwidth / 3 $gutterwidth / 3 $gutterwidth / 2;
+                    & span {
+                        align-self: flex-end;
+                    }
+                }
+            }
+            @for $i from 1 through 7 {
+                .legend-#{$i} {
+                    background: lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100));
+                    &.deselected {
+                        background: lighten($darkgrey, percentage(abs(($i - 7) * 5 ) / 100));
+                        & header{
+                            opacity: 0.3;
+                        }
+                        & .legendBody{
+                            display: none;
+                        }
+                    }
+
                 }
             }
         }
         @for $i from 1 through 7 {
-            .legend-#{$i} {
-                background: lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100));
-                &.deselected {
-                    background: lighten($darkgrey, percentage(abs(($i - 7) * 5 ) / 100));
-                    & header{
-                        opacity: 0.3;
+            &[data-value="#{$i}"] {
+                .sliderHolder {
+                    left: ($range-width / 7) * $i;
+                    .pseudoSlider {
+                        background: linear-gradient(
+                            to right,
+                            lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100)),
+                            lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100)) $gradient-position,
+                            white $gradient-position,
+                            white);
                     }
-                    & .legendBody{
-                        display: none;
-                    }
-                }
-
-            }
-        }
-    }
-    @for $i from 1 through 7 {
-        &[data-value="#{$i}"] {
-            .sliderHolder {
-                left: ($range-width / 7) * $i;
-                .pseudoSlider {
-                    background: linear-gradient(
-                        to right,
-                        lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100)),
-                        lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100)) $gradient-position,
-                        white $gradient-position,
-                        white);
                 }
             }
         }
-    }
-    .sliderHolder {
-        position: absolute;
-        top: -10px;
-        .arrowPointerBack {
+        .sliderHolder {
             position: absolute;
-            height: 20px;
-            width: 20px;
-            left: -10px;
-            top: 50px;
-            background: white;
-            transform: rotate(45deg);
-            transform-origin: center center;
-        }
-        .pseudoSlider {
-            position: absolute;
-            height: 120px;
-            width: 10px;
-            left: -5px;
-            cursor: e-resize;
-        }
-        .pseudoDrag {
-            position: absolute;
-            height: 120px;
-            width: 30px;
-            left: -15px;
-            cursor: e-resize;
-            background: none;
-        }
-        .arrowPointerFront {
-            cursor: pointer;
-            position: absolute;
-            height: 30px;
-            width: 30px;
-            left: -15px;
-            top: 45px;
-            background: none;
-            transform: rotate(45deg);
-            transform-origin: center center;
+            top: -10px;
+            .arrowPointerBack {
+                position: absolute;
+                height: 20px;
+                width: 20px;
+                left: -10px;
+                top: 50px;
+                background: white;
+                transform: rotate(45deg);
+                transform-origin: center center;
+            }
+            .pseudoSlider {
+                position: absolute;
+                height: 120px;
+                width: 10px;
+                left: -5px;
+                cursor: e-resize;
+            }
+            .pseudoDrag {
+                position: absolute;
+                height: 120px;
+                width: 30px;
+                left: -15px;
+                cursor: e-resize;
+                background: none;
+            }
+            .arrowPointerFront {
+                cursor: pointer;
+                position: absolute;
+                height: 30px;
+                width: 30px;
+                left: -15px;
+                top: 45px;
+                background: none;
+                transform: rotate(45deg);
+                transform-origin: center center;
+            }
         }
     }
 }

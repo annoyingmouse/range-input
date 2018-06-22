@@ -1,168 +1,172 @@
 body {
   margin: 0; }
 
-.sliderContainer {
-  position: relative;
+.sliderComponent {
   width: 100%;
-  height: 100px;
-  font-family: Arial, Helvetica, sans-serif; }
-  .sliderContainer .legendHolder {
-    position: absolute;
+  height: 120px;
+  overflow: hidden; }
+  .sliderComponent .sliderContainer {
+    position: relative;
     width: 100%;
     height: 100px;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start; }
-    .sliderContainer .legendHolder .legend {
-      width: 14.2857142857%;
+    font-family: Arial, Helvetica, sans-serif; }
+    .sliderComponent .sliderContainer .legendHolder {
+      position: absolute;
+      width: 100%;
       height: 100px;
+      top: 0;
+      left: 0;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       flex-wrap: nowrap;
-      justify-content: flex-start;
-      align-content: stretch;
-      align-items: flex-start; }
-      .sliderContainer .legendHolder .legend header {
-        cursor: pointer;
-        font-size: 2vw;
-        font-weight: bold;
-        color: white;
-        order: 0;
-        flex: 0 1 auto;
-        align-self: stretch;
-        margin: 8px 8px 0 12px; }
-      .sliderContainer .legendHolder .legend .legendBody {
-        font-size: 1.6vw;
-        font-weight: bold;
-        color: black;
-        order: 0;
-        flex: 2 1 auto;
-        align-self: stretch;
+      justify-content: flex-start; }
+      .sliderComponent .sliderContainer .legendHolder .legend {
+        width: 14.2857142857%;
+        height: 100px;
         display: flex;
-        margin: 0 8px 8px 12px; }
-        .sliderContainer .legendHolder .legend .legendBody span {
-          align-self: flex-end; }
-    .sliderContainer .legendHolder .legend-1 {
-      background: #afd6f3; }
-      .sliderContainer .legendHolder .legend-1.deselected {
-        background: #d0d5d5; }
-        .sliderContainer .legendHolder .legend-1.deselected header {
-          opacity: 0.3; }
-        .sliderContainer .legendHolder .legend-1.deselected .legendBody {
-          display: none; }
-    .sliderContainer .legendHolder .legend-2 {
-      background: #99caef; }
-      .sliderContainer .legendHolder .legend-2.deselected {
-        background: #c2c9c9; }
-        .sliderContainer .legendHolder .legend-2.deselected header {
-          opacity: 0.3; }
-        .sliderContainer .legendHolder .legend-2.deselected .legendBody {
-          display: none; }
-    .sliderContainer .legendHolder .legend-3 {
-      background: #83bfec; }
-      .sliderContainer .legendHolder .legend-3.deselected {
-        background: #b5bcbd; }
-        .sliderContainer .legendHolder .legend-3.deselected header {
-          opacity: 0.3; }
-        .sliderContainer .legendHolder .legend-3.deselected .legendBody {
-          display: none; }
-    .sliderContainer .legendHolder .legend-4 {
-      background: #6db3e8; }
-      .sliderContainer .legendHolder .legend-4.deselected {
-        background: #a7b0b1; }
-        .sliderContainer .legendHolder .legend-4.deselected header {
-          opacity: 0.3; }
-        .sliderContainer .legendHolder .legend-4.deselected .legendBody {
-          display: none; }
-    .sliderContainer .legendHolder .legend-5 {
-      background: #57a8e5; }
-      .sliderContainer .legendHolder .legend-5.deselected {
-        background: #9aa4a5; }
-        .sliderContainer .legendHolder .legend-5.deselected header {
-          opacity: 0.3; }
-        .sliderContainer .legendHolder .legend-5.deselected .legendBody {
-          display: none; }
-    .sliderContainer .legendHolder .legend-6 {
-      background: #419ce1; }
-      .sliderContainer .legendHolder .legend-6.deselected {
-        background: #8c9899; }
-        .sliderContainer .legendHolder .legend-6.deselected header {
-          opacity: 0.3; }
-        .sliderContainer .legendHolder .legend-6.deselected .legendBody {
-          display: none; }
-    .sliderContainer .legendHolder .legend-7 {
-      background: #2b91de; }
-      .sliderContainer .legendHolder .legend-7.deselected {
-        background: #7f8c8d; }
-        .sliderContainer .legendHolder .legend-7.deselected header {
-          opacity: 0.3; }
-        .sliderContainer .legendHolder .legend-7.deselected .legendBody {
-          display: none; }
-  .sliderContainer[data-value="1"] .sliderHolder {
-    left: 14.2857142857%; }
-    .sliderContainer[data-value="1"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #afd6f3, #afd6f3 70%, white 70%, white); }
-  .sliderContainer[data-value="2"] .sliderHolder {
-    left: 28.5714285714%; }
-    .sliderContainer[data-value="2"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #99caef, #99caef 70%, white 70%, white); }
-  .sliderContainer[data-value="3"] .sliderHolder {
-    left: 42.8571428571%; }
-    .sliderContainer[data-value="3"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #83bfec, #83bfec 70%, white 70%, white); }
-  .sliderContainer[data-value="4"] .sliderHolder {
-    left: 57.1428571429%; }
-    .sliderContainer[data-value="4"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #6db3e8, #6db3e8 70%, white 70%, white); }
-  .sliderContainer[data-value="5"] .sliderHolder {
-    left: 71.4285714286%; }
-    .sliderContainer[data-value="5"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #57a8e5, #57a8e5 70%, white 70%, white); }
-  .sliderContainer[data-value="6"] .sliderHolder {
-    left: 85.7142857143%; }
-    .sliderContainer[data-value="6"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #419ce1, #419ce1 70%, white 70%, white); }
-  .sliderContainer[data-value="7"] .sliderHolder {
-    left: 100%; }
-    .sliderContainer[data-value="7"] .sliderHolder .pseudoSlider {
-      background: linear-gradient(to right, #2b91de, #2b91de 70%, white 70%, white); }
-  .sliderContainer .sliderHolder {
-    position: absolute;
-    top: -10px; }
-    .sliderContainer .sliderHolder .arrowPointerBack {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-content: stretch;
+        align-items: flex-start; }
+        .sliderComponent .sliderContainer .legendHolder .legend header {
+          cursor: pointer;
+          font-size: 2vw;
+          font-weight: bold;
+          color: white;
+          order: 0;
+          flex: 0 1 auto;
+          align-self: stretch;
+          margin: 8px 8px 0 12px; }
+        .sliderComponent .sliderContainer .legendHolder .legend .legendBody {
+          font-size: 1.6vw;
+          font-weight: bold;
+          color: black;
+          order: 0;
+          flex: 2 1 auto;
+          align-self: stretch;
+          display: flex;
+          margin: 0 8px 8px 12px; }
+          .sliderComponent .sliderContainer .legendHolder .legend .legendBody span {
+            align-self: flex-end; }
+      .sliderComponent .sliderContainer .legendHolder .legend-1 {
+        background: #afd6f3; }
+        .sliderComponent .sliderContainer .legendHolder .legend-1.deselected {
+          background: #d0d5d5; }
+          .sliderComponent .sliderContainer .legendHolder .legend-1.deselected header {
+            opacity: 0.3; }
+          .sliderComponent .sliderContainer .legendHolder .legend-1.deselected .legendBody {
+            display: none; }
+      .sliderComponent .sliderContainer .legendHolder .legend-2 {
+        background: #99caef; }
+        .sliderComponent .sliderContainer .legendHolder .legend-2.deselected {
+          background: #c2c9c9; }
+          .sliderComponent .sliderContainer .legendHolder .legend-2.deselected header {
+            opacity: 0.3; }
+          .sliderComponent .sliderContainer .legendHolder .legend-2.deselected .legendBody {
+            display: none; }
+      .sliderComponent .sliderContainer .legendHolder .legend-3 {
+        background: #83bfec; }
+        .sliderComponent .sliderContainer .legendHolder .legend-3.deselected {
+          background: #b5bcbd; }
+          .sliderComponent .sliderContainer .legendHolder .legend-3.deselected header {
+            opacity: 0.3; }
+          .sliderComponent .sliderContainer .legendHolder .legend-3.deselected .legendBody {
+            display: none; }
+      .sliderComponent .sliderContainer .legendHolder .legend-4 {
+        background: #6db3e8; }
+        .sliderComponent .sliderContainer .legendHolder .legend-4.deselected {
+          background: #a7b0b1; }
+          .sliderComponent .sliderContainer .legendHolder .legend-4.deselected header {
+            opacity: 0.3; }
+          .sliderComponent .sliderContainer .legendHolder .legend-4.deselected .legendBody {
+            display: none; }
+      .sliderComponent .sliderContainer .legendHolder .legend-5 {
+        background: #57a8e5; }
+        .sliderComponent .sliderContainer .legendHolder .legend-5.deselected {
+          background: #9aa4a5; }
+          .sliderComponent .sliderContainer .legendHolder .legend-5.deselected header {
+            opacity: 0.3; }
+          .sliderComponent .sliderContainer .legendHolder .legend-5.deselected .legendBody {
+            display: none; }
+      .sliderComponent .sliderContainer .legendHolder .legend-6 {
+        background: #419ce1; }
+        .sliderComponent .sliderContainer .legendHolder .legend-6.deselected {
+          background: #8c9899; }
+          .sliderComponent .sliderContainer .legendHolder .legend-6.deselected header {
+            opacity: 0.3; }
+          .sliderComponent .sliderContainer .legendHolder .legend-6.deselected .legendBody {
+            display: none; }
+      .sliderComponent .sliderContainer .legendHolder .legend-7 {
+        background: #2b91de; }
+        .sliderComponent .sliderContainer .legendHolder .legend-7.deselected {
+          background: #7f8c8d; }
+          .sliderComponent .sliderContainer .legendHolder .legend-7.deselected header {
+            opacity: 0.3; }
+          .sliderComponent .sliderContainer .legendHolder .legend-7.deselected .legendBody {
+            display: none; }
+    .sliderComponent .sliderContainer[data-value="1"] .sliderHolder {
+      left: 14.2857142857%; }
+      .sliderComponent .sliderContainer[data-value="1"] .sliderHolder .pseudoSlider {
+        background: linear-gradient(to right, #afd6f3, #afd6f3 70%, white 70%, white); }
+    .sliderComponent .sliderContainer[data-value="2"] .sliderHolder {
+      left: 28.5714285714%; }
+      .sliderComponent .sliderContainer[data-value="2"] .sliderHolder .pseudoSlider {
+        background: linear-gradient(to right, #99caef, #99caef 70%, white 70%, white); }
+    .sliderComponent .sliderContainer[data-value="3"] .sliderHolder {
+      left: 42.8571428571%; }
+      .sliderComponent .sliderContainer[data-value="3"] .sliderHolder .pseudoSlider {
+        background: linear-gradient(to right, #83bfec, #83bfec 70%, white 70%, white); }
+    .sliderComponent .sliderContainer[data-value="4"] .sliderHolder {
+      left: 57.1428571429%; }
+      .sliderComponent .sliderContainer[data-value="4"] .sliderHolder .pseudoSlider {
+        background: linear-gradient(to right, #6db3e8, #6db3e8 70%, white 70%, white); }
+    .sliderComponent .sliderContainer[data-value="5"] .sliderHolder {
+      left: 71.4285714286%; }
+      .sliderComponent .sliderContainer[data-value="5"] .sliderHolder .pseudoSlider {
+        background: linear-gradient(to right, #57a8e5, #57a8e5 70%, white 70%, white); }
+    .sliderComponent .sliderContainer[data-value="6"] .sliderHolder {
+      left: 85.7142857143%; }
+      .sliderComponent .sliderContainer[data-value="6"] .sliderHolder .pseudoSlider {
+        background: linear-gradient(to right, #419ce1, #419ce1 70%, white 70%, white); }
+    .sliderComponent .sliderContainer[data-value="7"] .sliderHolder {
+      left: 100%; }
+      .sliderComponent .sliderContainer[data-value="7"] .sliderHolder .pseudoSlider {
+        background: linear-gradient(to right, #2b91de, #2b91de 70%, white 70%, white); }
+    .sliderComponent .sliderContainer .sliderHolder {
       position: absolute;
-      height: 20px;
-      width: 20px;
-      left: -10px;
-      top: 50px;
-      background: white;
-      transform: rotate(45deg);
-      transform-origin: center center; }
-    .sliderContainer .sliderHolder .pseudoSlider {
-      position: absolute;
-      height: 120px;
-      width: 10px;
-      left: -5px;
-      cursor: e-resize; }
-    .sliderContainer .sliderHolder .pseudoDrag {
-      position: absolute;
-      height: 120px;
-      width: 30px;
-      left: -15px;
-      cursor: e-resize;
-      background: none; }
-    .sliderContainer .sliderHolder .arrowPointerFront {
-      cursor: pointer;
-      position: absolute;
-      height: 30px;
-      width: 30px;
-      left: -15px;
-      top: 45px;
-      background: none;
-      transform: rotate(45deg);
-      transform-origin: center center; }
+      top: -10px; }
+      .sliderComponent .sliderContainer .sliderHolder .arrowPointerBack {
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        left: -10px;
+        top: 50px;
+        background: white;
+        transform: rotate(45deg);
+        transform-origin: center center; }
+      .sliderComponent .sliderContainer .sliderHolder .pseudoSlider {
+        position: absolute;
+        height: 120px;
+        width: 10px;
+        left: -5px;
+        cursor: e-resize; }
+      .sliderComponent .sliderContainer .sliderHolder .pseudoDrag {
+        position: absolute;
+        height: 120px;
+        width: 30px;
+        left: -15px;
+        cursor: e-resize;
+        background: none; }
+      .sliderComponent .sliderContainer .sliderHolder .arrowPointerFront {
+        cursor: pointer;
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        left: -15px;
+        top: 45px;
+        background: none;
+        transform: rotate(45deg);
+        transform-origin: center center; }
 
 /*# sourceMappingURL=range-input.css.map */

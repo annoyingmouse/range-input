@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Slider Compoennt</title>
+        <title>Slider Component</title>
         <link href="../style/range-input.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
@@ -12,56 +12,61 @@
 
         </div>
         <template id="slider-input" style="display: none;">
-            <div class="sliderContainer" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp" ref="slider">
-                <div class="legendHolder">
-                    <div class="legend legend-1" :class="{ deselected: value < 1 }">
-                        <header @click="headerClick">1</header>
-                        <div class="legendBody">
-                            <span>{{scale[0]}}</span>
-                        </div>
-                    </div>
-                    <div class="legend legend-2" :class="{ deselected: value < 2 }">
-                        <header @click="headerClick">2</header>
-                        <div class="legendBody">
-                            <span>{{scale[1]}}</span>
-                        </div>
-                    </div>
-                    <div class="legend legend-3" :class="{ deselected: value < 3 }">
-                        <header @click="headerClick">3</header>
-                        <div class="legendBody">
-                            <span>{{scale[2]}}</span>
-                        </div>
-                    </div>
-                    <div class="legend legend-4" :class="{ deselected: value < 4 }">
-                        <header @click="headerClick">4</header>
-                        <div class="legendBody">
-                            <span>{{scale[3]}}</span>
-                        </div>
-                    </div>
-                    <div class="legend legend-5" :class="{ deselected: value < 5 }">
-                        <header @click="headerClick">5</header>
-                        <div class="legendBody">
-                            <span>{{scale[4]}}</span>
-                        </div>
-                    </div>
-                    <div class="legend legend-6" :class="{ deselected: value < 6 }">
-                        <header @click="headerClick">6</header>
-                        <div class="legendBody">
-                            <span>{{scale[5]}}</span>
-                        </div>
-                    </div>
-                    <div class="legend legend-7" :class="{ deselected: value < 7 }">
-                        <header @click="headerClick">7</header>
-                        <div class="legendBody">
-                            <span>{{scale[6]}}</span>
-                        </div>
-                    </div>
+            <div class="sliderComponent">
+                <div class="edit">
+
                 </div>
-                <div class="sliderHolder" :style="leftOffset">
-                    <div class="arrowPointerBack"></div>
-                    <div class="pseudoSlider"></div>
-                    <div class="pseudoDrag" @mousedown="startDrag"></div>
-                    <div class="arrowPointerFront" @click="arrowClick"></div>
+                <div class="sliderContainer" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp" ref="slider">
+                    <div class="legendHolder">
+                        <div class="legend legend-1" :class="{ deselected: value < 1 }">
+                            <header @click="headerClick">1</header>
+                            <div class="legendBody">
+                                <span>{{actualScale[0]}}</span>
+                            </div>
+                        </div>
+                        <div class="legend legend-2" :class="{ deselected: value < 2 }">
+                            <header @click="headerClick">2</header>
+                            <div class="legendBody">
+                                <span>{{actualScale[1]}}</span>
+                            </div>
+                        </div>
+                        <div class="legend legend-3" :class="{ deselected: value < 3 }">
+                            <header @click="headerClick">3</header>
+                            <div class="legendBody">
+                                <span>{{actualScale[2]}}</span>
+                            </div>
+                        </div>
+                        <div class="legend legend-4" :class="{ deselected: value < 4 }">
+                            <header @click="headerClick">4</header>
+                            <div class="legendBody">
+                                <span>{{actualScale[3]}}</span>
+                            </div>
+                        </div>
+                        <div class="legend legend-5" :class="{ deselected: value < 5 }">
+                            <header @click="headerClick">5</header>
+                            <div class="legendBody">
+                                <span>{{actualScale[4]}}</span>
+                            </div>
+                        </div>
+                        <div class="legend legend-6" :class="{ deselected: value < 6 }">
+                            <header @click="headerClick">6</header>
+                            <div class="legendBody">
+                                <span>{{actualScale[5]}}</span>
+                            </div>
+                        </div>
+                        <div class="legend legend-7" :class="{ deselected: value < 7 }">
+                            <header @click="headerClick">7</header>
+                            <div class="legendBody">
+                                <span>{{actualScale[6]}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sliderHolder" :style="leftOffset">
+                        <div class="arrowPointerBack"></div>
+                        <div class="pseudoSlider"></div>
+                        <div class="pseudoDrag" @mousedown="startDrag"></div>
+                        <div class="arrowPointerFront" @click="arrowClick"></div>
+                    </div>
                 </div>
             </div>
         </template>
@@ -76,46 +81,36 @@
                         required: true,
                         type: Number
                     },
-                    primary: {
+                    dataScale: {
                         required: true,
-                        type: String
+                        type: Array
                     }
                 },
                 data: function(){
+                    var self = this;
                     return {
                         value: this.dataValue,
                         leftOffset: "",
                         dragging: false,
-                        scales: {
-                            "Likelihood": [
-                                ["Almost impossible", "Highly unlikely", "Unlikely", "Plausible", "Likely", "Highly likely", "Almost certain"],
-                                ["Almost impossible", "Highly unlikely", "Unlikely", "Likely", "Highly likely", "Almost certain"],
-                                ["Highly unlikely", "Unlikely", "Plausible", "Likely", "Highly likely"],
-                                ["Highly unlikely", "Unlikely", "Likely", "Highly likely"],
-                                ["Unlikely", "Plausible", "Likely"]
-                            ],
-                            "Impact": [
-                                ["Negligible", "Very low", "Low", "Medium", "High", "Very high", "Critical"],
-                                ["Negligible", "Very low", "Low", "High", "Very high", "Critical"],
-                                ["Very low", "Low", "Medium", "High", "Very high"],
-                                ["Very low", "Low", "High", "Very high"],
-                                ["Low", "Medium", "High"]
-                            ]
-                        },
-                        min: 1,
-                        max: 7,
-                        scale: []
+                        scale: this.dataScale,
+                        min: _.min(this.dataScale, function(c){
+                            return c.length;
+                        }).length,
+                        max: _.max(this.dataScale, function(c){
+                            return c.length;
+                        }).length,
+                        actualScale: this.dataScale[_.findIndex(this.dataScale, function(c){
+                            return c.length === self.dataValue;
+                        })]
                     }
                 },
                 methods: {
                     arrowClick: function(event) {
                         if(this.value > this.min && event.offsetX < 15){
                             this.value--;
-                            this.$emit('input', this.value);
                         }
                         if(this.value < this.max && event.offsetX >= 15){
                             this.value++;
-                            this.$emit('input', this.value);
                         }
                     },
                     startDrag: function(){
@@ -127,7 +122,6 @@
                             if(Math.round(event.clientX / sliderWidth) >= this.min && Math.round(event.clientX / sliderWidth) <= this.max){
                                 this.leftOffset = "left: " + (event.clientX - 10) + "px";
                                 this.value = Math.round(event.clientX / (sliderWidth));
-                                this.$emit('input', this.value);
                             }
                         }
                     },
@@ -141,37 +135,28 @@
                         var newValue = parseInt(event.target.textContent, 10);
                         if(newValue >= this.min && newValue <= this.max){
                             this.value = newValue;
-                            this.$emit('input', this.value);
                         }
                     }
                 },
                 watch: {
                     value: function(val){
-                        this.scale = _.find(this.scales[this.primary], function(c){
-                            return c.length === val
-                        });
+                        this.actualScale = this.scale[_.findIndex(this.scale, function(c){
+                            return c.length === val;
+                        })];
+                        this.$emit('input', this.value);
                     }
                 },
                 mounted: function(){
-                    var self = this;
-                    this.max = _.max(this.scales[this.primary], function(c){
-                        return c.length;
-                    }).length;
-                    this.min = _.min(this.scales[this.primary], function(c){
-                        return c.length;
-                    }).length;
-                    this.scale = _.find(this.scales[this.primary].slice(), function(c){
-                        return c.length === self.dataValue
-                    });
+
                 }
             });
             // create a new Vue instance and mount it to our div element above with the id of app
             const vm = new Vue({
                 template: '' +
                 '<div>' +
-                '    <slider-input :dataValue="Likelihood" :primary="\'Likelihood\'" @input="Likelihood = $event"></slider-input>' +
-                '    <hr>' +
-                '    <slider-input :dataValue="Impact" :primary="\'Impact\'" @input="Impact = $event"></slider-input>' +
+                '    <slider-input :dataValue="Likelihood" :dataScale="[[\'Almost impossible\',\'Highly unlikely\',\'Unlikely\',\'Plausible\',\'Likely\',\'Highly likely\',\'Almost certain\'],[\'Almost impossible\',\'Highly unlikely\',\'Unlikely\',\'Likely\',\'Highly likely\',\'Almost certain\'],[\'Highly unlikely\',\'Unlikely\',\'Plausible\',\'Likely\',\'Highly likely\'],[\'Highly unlikely\',\'Unlikely\',\'Likely\',\'Highly likely\'],[\'Unlikely\',\'Plausible\',\'Likely\']]" @input="Likelihood = $event"></slider-input>' +
+                // '    <hr>' +
+                // '    <slider-input :dataValue="Impact" :scale="[[\'Negligible\',\'Very low\',\'Low\',\'Medium\',\'High\',\'Very high\',\'Critical\'],[\'Negligible\',\'Very low\',\'Low\',\'High\',\'Very high\',\'Critical\'],[\'Very low\',\'Low\',\'Medium\',\'High\',\'Very high\'],[\'Very low\',\'Low\',\'High\',\'Very high\'],[\'Low\',\'Medium\',\'High\']]" @input="Impact = $event"></slider-input>' +
                 '    <p>Likelihood: {{Likelihood}}</p>' +
                 '    <p>Impact: {{Impact}}</p>' +
                 '</div>',
