@@ -25,6 +25,7 @@ $gradient-position: 70%;
         position: relative;
         width: $range-width;
         height: $range-height;
+        top: 10px;
         font-family: Arial, Helvetica, sans-serif;
         .legendHolder {
             position: absolute;
@@ -37,7 +38,7 @@ $gradient-position: 70%;
             flex-wrap: nowrap;
             justify-content: flex-start;
             .legend {
-                width: $range-width / 7;
+                flex: 1 1 0px;
                 height: $range-height;
                 display: flex;
                 flex-direction: column;
@@ -68,38 +69,46 @@ $gradient-position: 70%;
                         align-self: flex-end;
                     }
                 }
-            }
-            @for $i from 1 through 7 {
-                .legend-#{$i} {
-                    background: lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100));
-                    &.deselected {
-                        background: lighten($darkgrey, percentage(abs(($i - 7) * 5 ) / 100));
-                        & header{
-                            opacity: 0.3;
-                        }
-                        & .legendBody{
-                            display: none;
-                        }
+                &.deselected {
+                    & header{
+                        opacity: 0.4;
                     }
+                    & .legendBody{
+                        display: none;
+                    }
+                }
 
-                }
             }
+            //@for $i from 1 through 7 {
+            //    .legend-#{$i} {
+            //        background: lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100));
+            //        &.deselected {
+            //            background: lighten($darkgrey, percentage(abs(($i - 7) * 5 ) / 100));
+            //            & header{
+            //                opacity: 0.3;
+            //            }
+            //            & .legendBody{
+            //                display: none;
+            //            }
+            //        }
+            //
+            //    }
+            //}
         }
-        @for $i from 1 through 7 {
-            &[data-value="#{$i}"] {
-                .sliderHolder {
-                    left: ($range-width / 7) * $i;
-                    .pseudoSlider {
-                        background: linear-gradient(
-                            to right,
-                            lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100)),
-                            lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100)) $gradient-position,
-                            white $gradient-position,
-                            white);
-                    }
-                }
-            }
-        }
+        //@for $i from 1 through 7 {
+        //    &[data-value="#{$i}"] {
+        //        .sliderHolder {
+        //            .pseudoSlider {
+        //                background: linear-gradient(
+        //                    to right,
+        //                    lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100)),
+        //                    lighten($color-brand, percentage(abs(($i - 7) * 5 ) / 100)) $gradient-position,
+        //                    white $gradient-position,
+        //                    white);
+        //            }
+        //        }
+        //    }
+        //}
         .sliderHolder {
             position: absolute;
             top: -10px;
