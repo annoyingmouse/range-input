@@ -9,23 +9,26 @@
     </head>
     <body>
         <div id="app">
-            <slider-input v-model="Likelihood" v-bind:data-scale="[['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],['Highly unlikely','Unlikely','Likely','Highly likely'],['Unlikely','Plausible','Likely']]"></slider-input>
+            <slider-input v-model="Likelihood" v-bind:data-scale="[
+                ['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],
+                ['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],
+                ['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],
+                ['Highly unlikely','Unlikely','Likely','Highly likely'],
+                ['Unlikely','Plausible','Likely']
+            ]"></slider-input>
             <hr>
-            <slider-input v-model="Impact" v-bind:data-scale="[['Negligible','Very low','Low','Medium','High','Very high','Critical'],['Negligible','Very low','Low','High','Very high','Critical'],['Very low','Low','Medium','High','Very high'],['Very low','Low','High','Very high'],['Low','Medium','High']]"></slider-input>
+            <slider-input v-model="Impact" v-bind:data-scale="[
+                ['Negligible','Very low','Low','Medium','High','Very high','Critical'],
+                ['Negligible','Very low','Low','High','Very high','Critical'],
+                ['Very low','Low','Medium','High','Very high'],
+                ['Very low','Low','High','Very high'],
+                ['Low','Medium','High']
+            ]" v-bind:active-colour="'#2b91de'" v-bind:inactive-colour="'#7f8c8d'"></slider-input>
             <p>Likelihood: {{Likelihood}}</p>
             <p>Impact: {{Impact}}</p>
         </div>
-        <!--<template id="application" style="display: none;">-->
-            <!--<div>-->
-                <!--<slider-input v-model="Likelihood" v-bind:data-scale="[['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],['Highly unlikely','Unlikely','Likely','Highly likely'],['Unlikely','Plausible','Likely']]"></slider-input>-->
-                <!--<hr>-->
-                <!--<slider-input v-model="Impact" v-bind:data-scale="[['Negligible','Very low','Low','Medium','High','Very high','Critical'],['Negligible','Very low','Low','High','Very high','Critical'],['Very low','Low','Medium','High','Very high'],['Very low','Low','High','Very high'],['Low','Medium','High']]"></slider-input>-->
-                <!--<p>Likelihood: {{Likelihood}}</p>-->
-                <!--<p>Impact: {{Impact}}</p>-->
-            <!--</div>-->
-        <!--</template>-->
         <template id="slider-input-legend" style="display: none;">
-            <div :class="['legend', {'deselected': actualVal < num}, 'legend-' + num ]">
+            <div :class="['legend', {'deselected': actualVal < num}]" :style="{ background: colour }">
                 <header @click="$emit('legend-click', num)">{{num}}</header>
                 <div class="legendBody">
                     <span>{{legend}}</span>
@@ -41,11 +44,20 @@
                 </div>
                 <div class="sliderContainer" ref="slider" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp">
                     <div class="legendHolder">
-                        <slider-input-legend v-for="n in 7" :num="n" :legend="actualScale[n-1]" :actual-val="value" @legend-click="headerClick" :key="n"></slider-input-legend>
+                        <slider-input-legend
+                          v-for="n in max"
+                          :num="n"
+                          :legend="actualScale[n-1]"
+                          :actual-val="value"
+                          :key="n"
+                          :active-colour="activeColour"
+                          :inactive-colour="inactiveColour"
+                          :max="max"
+                          @legend-click="headerClick"></slider-input-legend>
                     </div>
                     <div class="sliderHolder" :style="leftOffset">
                         <div class="arrowPointerBack"></div>
-                        <div class="pseudoSlider"></div>
+                        <div class="pseudoSlider" :style="sliderStyle"></div>
                         <div class="pseudoDrag" @mousedown="startDrag"></div>
                         <div class="arrowPointerFront" @click="arrowClick"></div>
                     </div>
@@ -61,12 +73,65 @@
                         required: true,
                         type: Number
                     },
+                    max: {
+                        required: true,
+                        type: Number
+                    },
                     legend: {
                         type: String
                     },
                     actualVal: {
                         required: true,
                         type: Number
+                    },
+                    activeColour: {
+                        required: false,
+                        type: String,
+                        default: '#2b91de'
+                    },
+                    inactiveColour: {
+                        required: false,
+                        type: String,
+                        default: '#7f8c8d'
+                    }
+                },
+                data: function(){
+                    return {
+                        colour: this.shadeColor((this.actualVal < this.num) ? this.inactiveColour : this.activeColour, Math.abs(this.num - this.max) * 5)
+                    }
+                },
+                watch: {
+                    actualVal: function(){
+                        this.colour = this.shadeColor((this.actualVal < this.num) ? this.inactiveColour : this.activeColour, Math.abs(this.num - this.max) * 5)
+                    }
+                },
+                methods: {
+                    shadeColor: function(col,amt) {
+                        var usePound = false;
+                        if ( col[0] == "#" ) {
+                            col = col.slice(1);
+                            usePound = true;
+                        }
+                        var num = parseInt(col,16);
+                        var r = (num >> 16) + amt;
+                        if( r > 255 ){
+                            r = 255;
+                        }else if(r < 0){
+                            r = 0;
+                        }
+                        var b = ((num >> 8) & 0x00FF) + amt;
+                        if ( b > 255 ){
+                            b = 255;
+                        }else if (b < 0){
+                            b = 0;
+                        }
+                        var g = (num & 0x0000FF) + amt;
+                        if ( g > 255 ) {
+                            g = 255;
+                        }else if ( g < 0 ) {
+                            g = 0;
+                        }
+                        return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
                     }
                 }
             });
@@ -81,13 +146,25 @@
                     dataScale: {
                         required: true,
                         type: Array
+                    },
+                    activeColour: {
+                        type: String,
+                        default: "#2b91de"
+                    },
+                    inactiveColour: {
+                        type: String,
+                        default: "#7f8c8d"
                     }
                 },
                 data: function(){
                     var self = this;
+                    var max = _.max(this.dataScale, function(c){
+                        return c.length;
+                    }).length;
+                    var gadientColour = this.shadeColor(this.activeColour, Math.abs(this.value - max) * 5);
+                    console.log(gadientColour);
                     return {
                         dataValue: this.value,
-                        leftOffset: "",
                         dragging: false,
                         scale: this.dataScale,
                         min: _.min(this.dataScale, function(c){
@@ -98,7 +175,9 @@
                         }).length,
                         actualScale: this.dataScale[_.findIndex(this.dataScale, function(c){
                             return c.length === self.value;
-                        })]
+                        })],
+                        leftOffset: "left: " + ((this.value / max) * 100) + "%",
+                        sliderStyle: "background: linear-gradient(to right, " + gadientColour + ", " + gadientColour + " 70%, white 70%, white)"
                     }
                 },
                 methods: {
@@ -115,7 +194,7 @@
                     },
                     mouseMove: function(event){
                         if(this.dragging){
-                            var sliderWidth = this.$refs.slider.offsetWidth / 7;
+                            var sliderWidth = this.$refs.slider.offsetWidth / this.max;
                             if(Math.round(event.clientX / sliderWidth) >= this.min && Math.round(event.clientX / sliderWidth) <= this.max){
                                 this.leftOffset = "left: " + (event.clientX - 10) + "px";
                                 this.dataValue = Math.round(event.clientX / (sliderWidth));
@@ -125,13 +204,40 @@
                     mouseUp: function(){
                         if(this.dragging) {
                             this.dragging = false;
-                            this.leftOffset = "";
+                            this.leftOffset = "left: " + ((this.value / this.max) * 100) + "%";
                         }
                     },
                     headerClick: function(newValue){
                         if(newValue >= this.min && newValue <= this.max){
                             this.dataValue = newValue;
                         }
+                    },
+                    shadeColor: function(col,amt) {
+                        var usePound = false;
+                        if ( col[0] == "#" ) {
+                            col = col.slice(1);
+                            usePound = true;
+                        }
+                        var num = parseInt(col,16);
+                        var r = (num >> 16) + amt;
+                        if( r > 255 ){
+                            r = 255;
+                        }else if(r < 0){
+                            r = 0;
+                        }
+                        var b = ((num >> 8) & 0x00FF) + amt;
+                        if ( b > 255 ){
+                            b = 255;
+                        }else if (b < 0){
+                            b = 0;
+                        }
+                        var g = (num & 0x0000FF) + amt;
+                        if ( g > 255 ) {
+                            g = 255;
+                        }else if ( g < 0 ) {
+                            g = 0;
+                        }
+                        return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
                     }
                 },
                 watch: {
@@ -139,6 +245,11 @@
                         this.actualScale = this.scale[_.findIndex(this.scale, function(c){
                             return c.length === val;
                         })];
+                        if(!this.dragging){
+                            var gadientColour = this.shadeColor(this.activeColour, Math.abs(this.dataValue - this.max) * 5);
+                            this.leftOffset = "left: " + ((this.dataValue / this.max) * 100) + "%";
+                            this.sliderStyle = "background: linear-gradient(to right, " + gadientColour + ", " + gadientColour + " 70%, white 70%, white)"
+                        }
                         this.$emit('input', this.dataValue);
                     }
                 },
@@ -146,37 +257,8 @@
 
                 }
             });
-            // create a new Vue instance and mount it to our div element above with the id of app
+
             const vm = new Vue({
-                /*
-                 * Using inline template (horrible IE11 String)
-                 */
-                // template: '' +
-                // '<div>' +
-                // '    <slider-input v-model="Likelihood" :dataScale="[[\'Almost impossible\',\'Highly unlikely\',\'Unlikely\',\'Plausible\',\'Likely\',\'Highly likely\',\'Almost certain\'],[\'Almost impossible\',\'Highly unlikely\',\'Unlikely\',\'Likely\',\'Highly likely\',\'Almost certain\'],[\'Highly unlikely\',\'Unlikely\',\'Plausible\',\'Likely\',\'Highly likely\'],[\'Highly unlikely\',\'Unlikely\',\'Likely\',\'Highly likely\'],[\'Unlikely\',\'Plausible\',\'Likely\']]"></slider-input>' +
-                // '    <hr>' +
-                // '    <slider-input v-model="Impact" :dataScale="[[\'Negligible\',\'Very low\',\'Low\',\'Medium\',\'High\',\'Very high\',\'Critical\'],[\'Negligible\',\'Very low\',\'Low\',\'High\',\'Very high\',\'Critical\'],[\'Very low\',\'Low\',\'Medium\',\'High\',\'Very high\'],[\'Very low\',\'Low\',\'High\',\'Very high\'],[\'Low\',\'Medium\',\'High\']]" @input="Impact = $event"></slider-input>' +
-                // '    <p>Likelihood: {{Likelihood}}</p>' +
-                // '    <p>Impact: {{Impact}}</p>' +
-                // '</div>',
-
-                /*
-                 * Using inline template
-                 */
-                // template: `
-                //     <div>
-                //         <slider-input v-model="Likelihood" v-bind:data-scale="[['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],['Highly unlikely','Unlikely','Likely','Highly likely'],['Unlikely','Plausible','Likely']]"></slider-input>
-                //         <hr>
-                //         <slider-input v-model="Impact" v-bind:data-scale="[['Negligible','Very low','Low','Medium','High','Very high','Critical'],['Negligible','Very low','Low','High','Very high','Critical'],['Very low','Low','Medium','High','Very high'],['Very low','Low','High','Very high'],['Low','Medium','High']]"></slider-input>
-                //         <p>Likelihood: {{Likelihood}}</p>
-                //         <p>Impact: {{Impact}}</p>
-                //     </div>
-                // `,
-
-                /*
-                 * Using external template
-                 */
-                // template: "#application",
                 el: "#app",
                 data: function(){
                     return {
