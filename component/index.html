@@ -10,32 +10,35 @@
     <body>
         <div id="app">
             <slider-input v-model="Likelihood" v-bind:data-scale="[
-                ['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],
-                ['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],
-                ['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],
-                ['Highly unlikely','Unlikely','Likely','Highly likely'],
-                ['Unlikely','Plausible','Likely']
-            ]"></slider-input>
+                        ['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],
+                        ['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],
+                        ['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],
+                        ['Highly unlikely','Unlikely','Likely','Highly likely'],
+                        ['Unlikely','Plausible','Likely']
+                    ]"></slider-input>
             <hr>
             <slider-input v-model="Impact" v-bind:data-scale="[
-                ['Negligible','Very low','Low','Medium','High','Very high','Critical'],
-                ['Negligible','Very low','Low','High','Very high','Critical'],
-                ['Very low','Low','Medium','High','Very high'],
-                ['Very low','Low','High','Very high'],
-                ['Low','Medium','High']
-            ]" v-bind:active-colour="'#2b91de'" v-bind:inactive-colour="'#7f8c8d'"></slider-input>
+                        ['Negligible','Very low','Low','Medium','High','Very high','Critical','Super Critical'],
+                        ['Negligible','Very low','Low','Medium','High','Very high','Critical'],
+                        ['Negligible','Very low','Low','High','Very high','Critical'],
+                        ['Very low','Low','Medium','High','Very high'],
+                        ['Very low','Low','High','Very high'],
+                        ['Low','Medium','High'],
+                        ['Low','High'],
+                        ['']
+                    ]" v-bind:active-colour="'#2b91de'" v-bind:inactive-colour="'#7f8c8d'"></slider-input>
             <p>Likelihood: {{Likelihood}}</p>
             <p>Impact: {{Impact}}</p>
         </div>
+
         <template id="slider-input-legend" style="display: none;">
-            <div :class="['legend', {'deselected': actualVal < num}]" :style="{ background: colour }">
+            <div ref="legend" :class="['legend', {'deselected': actualVal < num}]" :style="colour">
                 <header @click="$emit('legend-click', num)">{{num}}</header>
                 <div class="legendBody">
                     <span>{{legend}}</span>
                 </div>
             </div>
         </template>
-
 
         <template id="slider-input" style="display: none;">
             <div class="sliderComponent">
@@ -96,43 +99,23 @@
                     }
                 },
                 data: function(){
+                    var col = (this.actualVal < this.num) ? this.inactiveColour : this.activeColour;
+                    var amt = Math.abs(this.num - this.max) * 5;
+
                     return {
-                        colour: this.shadeColor((this.actualVal < this.num) ? this.inactiveColour : this.activeColour, Math.abs(this.num - this.max) * 5)
+                        colour: "background: " + this.$parent.$options.methods.shadeColor(col, amt)
                     }
                 },
                 watch: {
                     actualVal: function(){
-                        this.colour = this.shadeColor((this.actualVal < this.num) ? this.inactiveColour : this.activeColour, Math.abs(this.num - this.max) * 5)
+                        var col = (this.actualVal < this.num) ? this.inactiveColour : this.activeColour;
+                        var amt = Math.abs(this.num - this.max) * 5;
+                        console.log(window.getComputedStyle(this.$refs.legend, null));
+                        this.colour = "background: " + this.$parent.$options.methods.shadeColor(col, amt)
                     }
                 },
-                methods: {
-                    shadeColor: function(col,amt) {
-                        var usePound = false;
-                        if ( col[0] == "#" ) {
-                            col = col.slice(1);
-                            usePound = true;
-                        }
-                        var num = parseInt(col,16);
-                        var r = (num >> 16) + amt;
-                        if( r > 255 ){
-                            r = 255;
-                        }else if(r < 0){
-                            r = 0;
-                        }
-                        var b = ((num >> 8) & 0x00FF) + amt;
-                        if ( b > 255 ){
-                            b = 255;
-                        }else if (b < 0){
-                            b = 0;
-                        }
-                        var g = (num & 0x0000FF) + amt;
-                        if ( g > 255 ) {
-                            g = 255;
-                        }else if ( g < 0 ) {
-                            g = 0;
-                        }
-                        return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
-                    }
+                mounted: function () {
+                    console.log(window.getComputedStyle(this.$refs.legend, null));
                 }
             });
 
@@ -162,7 +145,6 @@
                         return c.length;
                     }).length;
                     var gadientColour = this.shadeColor(this.activeColour, Math.abs(this.value - max) * 5);
-                    console.log(gadientColour);
                     return {
                         dataValue: this.value,
                         dragging: false,
@@ -212,7 +194,7 @@
                             this.dataValue = newValue;
                         }
                     },
-                    shadeColor: function(col,amt) {
+                    shadeColor: function(col, amt) {
                         var usePound = false;
                         if ( col[0] == "#" ) {
                             col = col.slice(1);
@@ -245,11 +227,11 @@
                         this.actualScale = this.scale[_.findIndex(this.scale, function(c){
                             return c.length === val;
                         })];
+                        var gadientColour = this.shadeColor(this.activeColour, Math.abs(this.dataValue - this.max) * 5);
                         if(!this.dragging){
-                            var gadientColour = this.shadeColor(this.activeColour, Math.abs(this.dataValue - this.max) * 5);
                             this.leftOffset = "left: " + ((this.dataValue / this.max) * 100) + "%";
-                            this.sliderStyle = "background: linear-gradient(to right, " + gadientColour + ", " + gadientColour + " 70%, white 70%, white)"
                         }
+                        this.sliderStyle = "background: linear-gradient(to right, " + gadientColour + ", " + gadientColour + " 70%, white 70%, white)";
                         this.$emit('input', this.dataValue);
                     }
                 },

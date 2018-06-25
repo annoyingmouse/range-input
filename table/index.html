@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css" />
+</head>
+<body>
+<br />
+<br />
+<div class="container">
+    <table id="example" class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Domain</th>
+            <th>Country</th>
+            <th>Load</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+</html>
+<script>
+    $(document).ready(function() {
+        var example = $('#example').DataTable({
+            "columns": [{
+                "title": "Domain",
+                "data": "domain"
+            },{
+                "title": "Country",
+                "data": "country"
+            },{
+                "title": "Load",
+                "date": "load"
+            }]
+        });
+        $.getJSON("https://nordvpn.com/api/server?callback=?",function(json){
+            console.log("json");
+        });
+
+
+        // $.ajax({
+        //     "url": "https://nordvpn.com/api/server",
+        //     dataType: "jsonp",
+        //     jsonpCallback: "logResults"
+        // });
+        // function logResults(json){
+        //     console.log(json);
+        // }
+    });
+</script>

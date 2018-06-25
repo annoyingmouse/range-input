@@ -10,6 +10,7 @@ body {
     position: relative;
     width: 100%;
     height: 100px;
+    top: 10px;
     font-family: Arial, Helvetica, sans-serif; }
     .sliderComponent .sliderContainer .legendHolder {
       position: absolute;
@@ -22,14 +23,15 @@ body {
       flex-wrap: nowrap;
       justify-content: flex-start; }
       .sliderComponent .sliderContainer .legendHolder .legend {
-        width: 14.2857142857%;
+        flex: 1 1 0;
         height: 100px;
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
         justify-content: flex-start;
         align-content: stretch;
-        align-items: flex-start; }
+        align-items: flex-start;
+        background: #2b91de; }
         .sliderComponent .sliderContainer .legendHolder .legend header {
           cursor: pointer;
           font-size: 2vw;
@@ -50,90 +52,10 @@ body {
           margin: 0 8px 8px 12px; }
           .sliderComponent .sliderContainer .legendHolder .legend .legendBody span {
             align-self: flex-end; }
-      .sliderComponent .sliderContainer .legendHolder .legend-1 {
-        background: #afd6f3; }
-        .sliderComponent .sliderContainer .legendHolder .legend-1.deselected {
-          background: #d0d5d5; }
-          .sliderComponent .sliderContainer .legendHolder .legend-1.deselected header {
-            opacity: 0.3; }
-          .sliderComponent .sliderContainer .legendHolder .legend-1.deselected .legendBody {
-            display: none; }
-      .sliderComponent .sliderContainer .legendHolder .legend-2 {
-        background: #99caef; }
-        .sliderComponent .sliderContainer .legendHolder .legend-2.deselected {
-          background: #c2c9c9; }
-          .sliderComponent .sliderContainer .legendHolder .legend-2.deselected header {
-            opacity: 0.3; }
-          .sliderComponent .sliderContainer .legendHolder .legend-2.deselected .legendBody {
-            display: none; }
-      .sliderComponent .sliderContainer .legendHolder .legend-3 {
-        background: #83bfec; }
-        .sliderComponent .sliderContainer .legendHolder .legend-3.deselected {
-          background: #b5bcbd; }
-          .sliderComponent .sliderContainer .legendHolder .legend-3.deselected header {
-            opacity: 0.3; }
-          .sliderComponent .sliderContainer .legendHolder .legend-3.deselected .legendBody {
-            display: none; }
-      .sliderComponent .sliderContainer .legendHolder .legend-4 {
-        background: #6db3e8; }
-        .sliderComponent .sliderContainer .legendHolder .legend-4.deselected {
-          background: #a7b0b1; }
-          .sliderComponent .sliderContainer .legendHolder .legend-4.deselected header {
-            opacity: 0.3; }
-          .sliderComponent .sliderContainer .legendHolder .legend-4.deselected .legendBody {
-            display: none; }
-      .sliderComponent .sliderContainer .legendHolder .legend-5 {
-        background: #57a8e5; }
-        .sliderComponent .sliderContainer .legendHolder .legend-5.deselected {
-          background: #9aa4a5; }
-          .sliderComponent .sliderContainer .legendHolder .legend-5.deselected header {
-            opacity: 0.3; }
-          .sliderComponent .sliderContainer .legendHolder .legend-5.deselected .legendBody {
-            display: none; }
-      .sliderComponent .sliderContainer .legendHolder .legend-6 {
-        background: #419ce1; }
-        .sliderComponent .sliderContainer .legendHolder .legend-6.deselected {
-          background: #8c9899; }
-          .sliderComponent .sliderContainer .legendHolder .legend-6.deselected header {
-            opacity: 0.3; }
-          .sliderComponent .sliderContainer .legendHolder .legend-6.deselected .legendBody {
-            display: none; }
-      .sliderComponent .sliderContainer .legendHolder .legend-7 {
-        background: #2b91de; }
-        .sliderComponent .sliderContainer .legendHolder .legend-7.deselected {
-          background: #7f8c8d; }
-          .sliderComponent .sliderContainer .legendHolder .legend-7.deselected header {
-            opacity: 0.3; }
-          .sliderComponent .sliderContainer .legendHolder .legend-7.deselected .legendBody {
-            display: none; }
-    .sliderComponent .sliderContainer[data-value="1"] .sliderHolder {
-      left: 14.2857142857%; }
-      .sliderComponent .sliderContainer[data-value="1"] .sliderHolder .pseudoSlider {
-        background: linear-gradient(to right, #afd6f3, #afd6f3 70%, white 70%, white); }
-    .sliderComponent .sliderContainer[data-value="2"] .sliderHolder {
-      left: 28.5714285714%; }
-      .sliderComponent .sliderContainer[data-value="2"] .sliderHolder .pseudoSlider {
-        background: linear-gradient(to right, #99caef, #99caef 70%, white 70%, white); }
-    .sliderComponent .sliderContainer[data-value="3"] .sliderHolder {
-      left: 42.8571428571%; }
-      .sliderComponent .sliderContainer[data-value="3"] .sliderHolder .pseudoSlider {
-        background: linear-gradient(to right, #83bfec, #83bfec 70%, white 70%, white); }
-    .sliderComponent .sliderContainer[data-value="4"] .sliderHolder {
-      left: 57.1428571429%; }
-      .sliderComponent .sliderContainer[data-value="4"] .sliderHolder .pseudoSlider {
-        background: linear-gradient(to right, #6db3e8, #6db3e8 70%, white 70%, white); }
-    .sliderComponent .sliderContainer[data-value="5"] .sliderHolder {
-      left: 71.4285714286%; }
-      .sliderComponent .sliderContainer[data-value="5"] .sliderHolder .pseudoSlider {
-        background: linear-gradient(to right, #57a8e5, #57a8e5 70%, white 70%, white); }
-    .sliderComponent .sliderContainer[data-value="6"] .sliderHolder {
-      left: 85.7142857143%; }
-      .sliderComponent .sliderContainer[data-value="6"] .sliderHolder .pseudoSlider {
-        background: linear-gradient(to right, #419ce1, #419ce1 70%, white 70%, white); }
-    .sliderComponent .sliderContainer[data-value="7"] .sliderHolder {
-      left: 100%; }
-      .sliderComponent .sliderContainer[data-value="7"] .sliderHolder .pseudoSlider {
-        background: linear-gradient(to right, #2b91de, #2b91de 70%, white 70%, white); }
+        .sliderComponent .sliderContainer .legendHolder .legend.deselected header {
+          opacity: 0.4; }
+        .sliderComponent .sliderContainer .legendHolder .legend.deselected .legendBody {
+          display: none; }
     .sliderComponent .sliderContainer .sliderHolder {
       position: absolute;
       top: -10px; }

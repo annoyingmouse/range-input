@@ -38,7 +38,7 @@ $gradient-position: 70%;
             flex-wrap: nowrap;
             justify-content: flex-start;
             .legend {
-                flex: 1 1 0px;
+                flex: 1 1 0;
                 height: $range-height;
                 display: flex;
                 flex-direction: column;
@@ -46,6 +46,7 @@ $gradient-position: 70%;
                 justify-content: flex-start;
                 align-content: stretch;
                 align-items: flex-start;
+                background: $color-brand;
                 & header{
                     cursor: pointer;
                     font-size: 2vw;
