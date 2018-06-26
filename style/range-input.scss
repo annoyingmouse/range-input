@@ -38,7 +38,7 @@ $gradient-position: 70%;
             flex-wrap: nowrap;
             justify-content: flex-start;
             .legend {
-                flex: 1 1 0;
+                flex: 1 1 0px;
                 height: $range-height;
                 display: flex;
                 flex-direction: column;

@@ -23,7 +23,7 @@ body {
       flex-wrap: nowrap;
       justify-content: flex-start; }
       .sliderComponent .sliderContainer .legendHolder .legend {
-        flex: 1 1 0;
+        flex: 1 1 0px;
         height: 100px;
         display: flex;
         flex-direction: column;
