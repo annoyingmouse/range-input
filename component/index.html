@@ -10,23 +10,24 @@
     <body>
         <div id="app">
             <slider-input v-model="Likelihood" v-bind:data-scale="[
-                        ['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],
-                        ['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],
-                        ['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],
-                        ['Highly unlikely','Unlikely','Likely','Highly likely'],
-                        ['Unlikely','Plausible','Likely']
-                    ]"></slider-input>
+                ['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],
+                ['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],
+                ['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],
+                ['Highly unlikely','Unlikely','Likely','Highly likely'],
+                ['Unlikely','Plausible','Likely']
+            ]"></slider-input>
             <hr>
             <slider-input v-model="Impact" v-bind:data-scale="[
-                        ['Negligible','Very low','Low','Medium','High','Very high','Critical','Super Critical'],
-                        ['Negligible','Very low','Low','Medium','High','Very high','Critical'],
-                        ['Negligible','Very low','Low','High','Very high','Critical'],
-                        ['Very low','Low','Medium','High','Very high'],
-                        ['Very low','Low','High','Very high'],
-                        ['Low','Medium','High'],
-                        ['Low','High'],
-                        ['']
-                    ]" v-bind:active-colour="'#2b91de'" v-bind:inactive-colour="'#7f8c8d'"></slider-input>
+                ['Negligible','Very low','Low','Medium','High','Very high','Critical','Super Critical','Mega Critical'],
+                ['Negligible','Very low','Low','Medium','High','Very high','Critical','Super Critical'],
+                ['Negligible','Very low','Low','Medium','High','Very high','Critical'],
+                ['Negligible','Very low','Low','High','Very high','Critical'],
+                ['Very low','Low','Medium','High','Very high'],
+                ['Very low','Low','High','Very high'],
+                ['Low','Medium','High'],
+                ['Low','High'],
+                ['Meh']
+            ]" ></slider-input>
             <p>Likelihood: {{Likelihood}}</p>
             <p>Impact: {{Impact}}</p>
         </div>
@@ -53,14 +54,13 @@
                           :legend="actualScale[n-1]"
                           :actual-val="value"
                           :key="n"
-                          :active-colour="activeColour"
-                          :inactive-colour="inactiveColour"
                           :max="max"
                           @legend-click="headerClick"></slider-input-legend>
                     </div>
                     <div class="sliderHolder" :style="leftOffset">
+                        <div ref="deselected" class="pseudoDeselected"></div>
                         <div class="arrowPointerBack"></div>
-                        <div class="pseudoSlider" :style="sliderStyle"></div>
+                        <div ref="pseudoSlider" class="pseudoSlider" :style="sliderStyle"></div>
                         <div class="pseudoDrag" @mousedown="startDrag"></div>
                         <div class="arrowPointerFront" @click="arrowClick"></div>
                     </div>
@@ -86,36 +86,29 @@
                     actualVal: {
                         required: true,
                         type: Number
-                    },
-                    activeColour: {
-                        required: false,
-                        type: String,
-                        default: '#2b91de'
-                    },
-                    inactiveColour: {
-                        required: false,
-                        type: String,
-                        default: '#7f8c8d'
                     }
                 },
                 data: function(){
-                    var col = (this.actualVal < this.num) ? this.inactiveColour : this.activeColour;
-                    var amt = Math.abs(this.num - this.max) * 5;
-
                     return {
-                        colour: "background: " + this.$parent.$options.methods.shadeColor(col, amt)
+                        colour: "",
+                        originalColour: ""
                     }
                 },
                 watch: {
                     actualVal: function(){
-                        var col = (this.actualVal < this.num) ? this.inactiveColour : this.activeColour;
+                        var col = (this.actualVal < this.num) ? this.$parent.deselectedColour : this.originalColour;
                         var amt = Math.abs(this.num - this.max) * 5;
-                        console.log(window.getComputedStyle(this.$refs.legend, null));
                         this.colour = "background: " + this.$parent.$options.methods.shadeColor(col, amt)
                     }
                 },
                 mounted: function () {
-                    console.log(window.getComputedStyle(this.$refs.legend, null));
+                    var computedStyle = window.getComputedStyle(this.$refs.legend, null);
+                    this.originalColour = this.$parent.$options.methods.rgb2hex(computedStyle.backgroundColor);
+                    this.$nextTick(function () {
+                        var col = (this.actualVal < this.num) ? this.$parent.deselectedColour : this.originalColour;
+                        var amt = Math.abs(this.num - this.max) * 5;
+                        this.colour = "background: " + this.$parent.$options.methods.shadeColor(col, amt);
+                    });
                 }
             });
 
@@ -129,14 +122,6 @@
                     dataScale: {
                         required: true,
                         type: Array
-                    },
-                    activeColour: {
-                        type: String,
-                        default: "#2b91de"
-                    },
-                    inactiveColour: {
-                        type: String,
-                        default: "#7f8c8d"
                     }
                 },
                 data: function(){
@@ -144,7 +129,6 @@
                     var max = _.max(this.dataScale, function(c){
                         return c.length;
                     }).length;
-                    var gadientColour = this.shadeColor(this.activeColour, Math.abs(this.value - max) * 5);
                     return {
                         dataValue: this.value,
                         dragging: false,
@@ -159,7 +143,9 @@
                             return c.length === self.value;
                         })],
                         leftOffset: "left: " + ((this.value / max) * 100) + "%",
-                        sliderStyle: "background: linear-gradient(to right, " + gadientColour + ", " + gadientColour + " 70%, white 70%, white)"
+                        sliderStyle: "",
+                        originalColour: "",
+                        deselectedColour: ""
                     }
                 },
                 methods: {
@@ -192,6 +178,10 @@
                     headerClick: function(newValue){
                         if(newValue >= this.min && newValue <= this.max){
                             this.dataValue = newValue;
+                        }else{
+                            if(newValue <= this.min){
+                                this.dataValue = this.min;
+                            }
                         }
                     },
                     shadeColor: function(col, amt) {
@@ -220,6 +210,13 @@
                             g = 0;
                         }
                         return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+                    },
+                    rgb2hex: function(rgb){
+                        rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+                        return (rgb && rgb.length === 4) ? "#" +
+                            ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+                            ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+                            ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
                     }
                 },
                 watch: {
@@ -227,7 +224,7 @@
                         this.actualScale = this.scale[_.findIndex(this.scale, function(c){
                             return c.length === val;
                         })];
-                        var gadientColour = this.shadeColor(this.activeColour, Math.abs(this.dataValue - this.max) * 5);
+                        var gadientColour = this.shadeColor(this.originalColour, Math.abs(this.dataValue - this.max) * 5);
                         if(!this.dragging){
                             this.leftOffset = "left: " + ((this.dataValue / this.max) * 100) + "%";
                         }
@@ -236,7 +233,12 @@
                     }
                 },
                 mounted: function(){
-
+                    this.originalColour = this.rgb2hex(window.getComputedStyle(this.$refs.pseudoSlider, null).backgroundColor);
+                    this.deselectedColour = this.rgb2hex(window.getComputedStyle(this.$refs.deselected, null).backgroundColor);
+                    this.$nextTick(function () {
+                        var gadientColour = this.shadeColor(this.originalColour, Math.abs(this.value - this.max) * 5);
+                        this.sliderStyle = "background: linear-gradient(to right, " + gadientColour + ", " + gadientColour + " 70%, white 70%, white)";
+                    });
                 }
             });
 
