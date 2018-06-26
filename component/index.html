@@ -15,7 +15,7 @@
                 ['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],
                 ['Highly unlikely','Unlikely','Likely','Highly likely'],
                 ['Unlikely','Plausible','Likely']
-            ]"></slider-input>
+            ]" v-bind:user-scale="[[null,null,null,'Bloody likely'],[null,null,'Bloody likely']]"></slider-input>
             <hr>
             <slider-input v-model="Impact" v-bind:data-scale="[
                 ['Negligible','Very low','Low','Medium','High','Very high','Critical','Super Critical','Mega Critical'],
@@ -27,16 +27,17 @@
                 ['Low','Medium','High'],
                 ['Low','High'],
                 ['Meh']
-            ]" ></slider-input>
+            ]" v-bind:user-scale="[]"></slider-input>
             <p>Likelihood: {{Likelihood}}</p>
             <p>Impact: {{Impact}}</p>
         </div>
 
         <template id="slider-input-legend" style="display: none;">
-            <div ref="legend" :class="['legend', {'deselected': actualVal < num}]" :style="colour">
-                <header @click="$emit('legend-click', num)">{{num}}</header>
+            <div ref="legend" v-bind:class="['legend', {'deselected': actualVal < num}]" v-bind:style="colour">
+                <header v-on:click="$emit('legend-click', num)">{{num}}</header>
                 <div class="legendBody">
-                    <span>{{legend}}</span>
+                    <span v-if="!editable">{{legend}}</span>
+                    <span v-else contenteditable="true">{{legend}}</span>
                 </div>
             </div>
         </template>
@@ -44,25 +45,26 @@
         <template id="slider-input" style="display: none;">
             <div class="sliderComponent">
                 <div class="edit">
-
+                    <button v-on:click="editable = !editable">Edit Legends</button>
                 </div>
-                <div class="sliderContainer" ref="slider" :data-value="value" @mousemove="mouseMove" @mouseup="mouseUp">
+                <div class="sliderContainer" ref="slider" v-bind:data-value="value" v-on:mousemove="mouseMove" v-on:mouseup="mouseUp">
                     <div class="legendHolder">
                         <slider-input-legend
                           v-for="n in max"
-                          :num="n"
-                          :legend="actualScale[n-1]"
-                          :actual-val="value"
-                          :key="n"
-                          :max="max"
-                          @legend-click="headerClick"></slider-input-legend>
+                          v-bind:num="n"
+                          v-bind:legend="getLegend(n-1)"
+                          v-bind:actual-val="value"
+                          v-bind:key="n"
+                          v-bind:max="max"
+                          v-bind:editable="editable"
+                          v-on:legend-click="headerClick"></slider-input-legend>
                     </div>
-                    <div class="sliderHolder" :style="leftOffset">
+                    <div class="sliderHolder" v-bind:style="leftOffset">
                         <div ref="deselected" class="pseudoDeselected"></div>
                         <div class="arrowPointerBack"></div>
-                        <div ref="pseudoSlider" class="pseudoSlider" :style="sliderStyle"></div>
-                        <div class="pseudoDrag" @mousedown="startDrag"></div>
-                        <div class="arrowPointerFront" @click="arrowClick"></div>
+                        <div ref="pseudoSlider" class="pseudoSlider" v-bind:style="sliderStyle"></div>
+                        <div class="pseudoDrag" v-on:mousedown="startDrag"></div>
+                        <div class="arrowPointerFront" v-on:click="arrowClick"></div>
                     </div>
                 </div>
             </div>
@@ -86,6 +88,10 @@
                     actualVal: {
                         required: true,
                         type: Number
+                    },
+                    editable: {
+                        required: true,
+                        type: Boolean
                     }
                 },
                 data: function(){
@@ -122,33 +128,51 @@
                     dataScale: {
                         required: true,
                         type: Array
+                    },
+                    userScale: {
+                        required: false,
+                        type: Array
                     }
                 },
                 data: function(){
-                    var self = this;
                     var max = _.max(this.dataScale, function(c){
                         return c.length;
                     }).length;
                     return {
                         dataValue: this.value,
                         dragging: false,
-                        scale: this.dataScale,
                         min: _.min(this.dataScale, function(c){
                             return c.length;
                         }).length,
-                        max: _.max(this.dataScale, function(c){
-                            return c.length;
-                        }).length,
-                        actualScale: this.dataScale[_.findIndex(this.dataScale, function(c){
-                            return c.length === self.value;
-                        })],
+                        max: max,
                         leftOffset: "left: " + ((this.value / max) * 100) + "%",
                         sliderStyle: "",
                         originalColour: "",
-                        deselectedColour: ""
+                        deselectedColour: "",
+                        editable: false
                     }
                 },
                 methods: {
+                    getLegend: function(len){
+                        console.log("this.userScale", this.userScale);
+                        console.log("this.getScale(this.userScale, this.dataValue)", this.getScale(this.userScale, this.dataValue));
+                        console.log("this.userScale[this.getScale(this.userScale, this.dataValue)]", this.userScale[this.getScale(this.userScale, this.dataValue)]);
+                        if(
+                            this.userScale &&
+                            (this.getScale(this.userScale, this.dataValue) !== -1) &&
+                            this.userScale[this.getScale(this.userScale, this.dataValue)] &&
+                            this.userScale[this.getScale(this.userScale, this.dataValue)][len]
+                        ){
+                            return this.userScale[this.getScale(this.userScale, this.dataValue)][len];
+                        }else{
+                            return this.dataScale[this.getScale(this.dataScale, this.dataValue)][len];
+                        }
+                    },
+                    getScale: function(arr, len){
+                        return _.findIndex(arr, function(c){
+                            return c.length === len;
+                        });
+                    },
                     arrowClick: function(event) {
                         if(this.dataValue > this.min && event.offsetX < 15){
                             this.dataValue--;
@@ -221,9 +245,6 @@
                 },
                 watch: {
                     dataValue: function(val){
-                        this.actualScale = this.scale[_.findIndex(this.scale, function(c){
-                            return c.length === val;
-                        })];
                         var gadientColour = this.shadeColor(this.originalColour, Math.abs(this.dataValue - this.max) * 5);
                         if(!this.dragging){
                             this.leftOffset = "left: " + ((this.dataValue / this.max) * 100) + "%";

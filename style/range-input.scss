@@ -16,7 +16,7 @@ $gradient-position: 70%;
 .sliderComponent{
     margin: $gutterwidth / 2;
     width: calc(#{$range-width} - #{$gutterwidth});
-    height: $range-height + 20;
+    height: $range-height + 40;
     overflow: hidden;
     .edit{
 
