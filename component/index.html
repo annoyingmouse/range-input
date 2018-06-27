@@ -26,7 +26,7 @@
                 ['Very low','Low','High','Very high'],
                 ['Low','Medium','High'],
                 ['Low','High'],
-                ['Meh']
+                ['Unknown']
             ]"></slider-input>
             <p>Likelihood: {{Likelihood.val}}</p>
             <p>Impact: {{Impact.val}}</p>
@@ -45,7 +45,10 @@
         <template id="slider-input" style="display: none;">
             <div class="sliderComponent">
                 <div class="edit">
-                    <button v-on:click="editable = !editable">Edit Legends</button>
+                    <!-- These will require styling -->
+                    <button v-on:click="editable = false" v-if="editable">Finish editing</button>
+                    <button v-on:click="restoreDefault" v-if="editable">Restore default</button>
+                    <button v-on:click="editable = true" v-else>Edit Legends</button>
                 </div>
                 <div class="sliderContainer" ref="slider" v-on:mousemove="mouseMove" v-on:mouseup="mouseUp">
                     <div class="legendHolder">
@@ -115,7 +118,7 @@
                 },
                 mounted: function () {
                     var computedStyle = window.getComputedStyle(this.$refs.legend, null);
-                    this.originalColour = this.$parent.$options.methods.rgb2hex(computedStyle.backgroundColor);
+                    this.originalColour = computedStyle.backgroundColor;
                     this.$nextTick(function () {
                         var col = (this.actualVal < this.num) ? this.$parent.deselectedColour : this.originalColour;
                         var amt = Math.abs(this.num - this.max) * 5;
@@ -165,13 +168,15 @@
                         this.value.scale[this.getScale(this.value.scale, arr)][i] = legend;
                         this.$emit('input', this.value);
                     },
+                    restoreDefault: function(){
+                        this.value.scale = [];
+                        this.editable = false;
+                        this.$emit('input', this.value);
+                    },
                     getLegend: function(len){
                         if(
-                            // Check for scale property
                             this.value.hasOwnProperty("scale") &&
-                            // Check to see if there's a sub-array of the correct length
                             this.getScale(this.value.scale, this.value.val) !== -1 &&
-                            // Check to see if the sub-array has a value
                             this.value.scale[this.getScale(this.value.scale, this.value.val)][len] != null
                         ){
                             return this.value.scale[this.getScale(this.value.scale, this.value.val)][len];
@@ -228,38 +233,10 @@
                         }
                     },
                     shadeColor: function(col, amt) {
-                        var usePound = false;
-                        if ( col[0] == "#" ) {
-                            col = col.slice(1);
-                            usePound = true;
-                        }
-                        var num = parseInt(col,16);
-                        var r = (num >> 16) + amt;
-                        if( r > 255 ){
-                            r = 255;
-                        }else if(r < 0){
-                            r = 0;
-                        }
-                        var b = ((num >> 8) & 0x00FF) + amt;
-                        if ( b > 255 ){
-                            b = 255;
-                        }else if (b < 0){
-                            b = 0;
-                        }
-                        var g = (num & 0x0000FF) + amt;
-                        if ( g > 255 ) {
-                            g = 255;
-                        }else if ( g < 0 ) {
-                            g = 0;
-                        }
-                        return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
-                    },
-                    rgb2hex: function(rgb){
-                        rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-                        return (rgb && rgb.length === 4) ? "#" +
-                            ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-                            ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-                            ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+                        return col.replace(/\d+/g, function(c){
+                            c = parseInt(c, 10);
+                            return ((c + amt) > 255) ? 255 : ((c + amt) < 0) ? 0 : c + amt
+                        });
                     }
                 },
                 watch: {
@@ -283,8 +260,8 @@
                     }
                 },
                 mounted: function(){
-                    this.originalColour = this.rgb2hex(window.getComputedStyle(this.$refs.pseudoSlider, null).backgroundColor);
-                    this.deselectedColour = this.rgb2hex(window.getComputedStyle(this.$refs.deselected, null).backgroundColor);
+                    this.originalColour = window.getComputedStyle(this.$refs.pseudoSlider, null).backgroundColor;
+                    this.deselectedColour = window.getComputedStyle(this.$refs.deselected, null).backgroundColor;
                     this.$nextTick(function () {
                         var gadientColour = this.shadeColor(this.originalColour, Math.abs(this.value.val - this.max) * 5);
                         this.sliderStyle = "background: linear-gradient(to right, " + gadientColour + ", " + gadientColour + " 70%, white 70%, white)";
