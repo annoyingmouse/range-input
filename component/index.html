@@ -15,7 +15,7 @@
                 ['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],
                 ['Highly unlikely','Unlikely','Likely','Highly likely'],
                 ['Unlikely','Plausible','Likely']
-            ]" v-bind:user-scale="[[null,null,null,'Bloody likely'],[null,null,'Bloody likely']]"></slider-input>
+            ]"></slider-input>
             <hr>
             <slider-input v-model="Impact" v-bind:data-scale="[
                 ['Negligible','Very low','Low','Medium','High','Very high','Critical','Super Critical','Mega Critical'],
@@ -27,9 +27,9 @@
                 ['Low','Medium','High'],
                 ['Low','High'],
                 ['Meh']
-            ]" v-bind:user-scale="[]"></slider-input>
-            <p>Likelihood: {{Likelihood}}</p>
-            <p>Impact: {{Impact}}</p>
+            ]"></slider-input>
+            <p>Likelihood: {{Likelihood.val}}</p>
+            <p>Impact: {{Impact.val}}</p>
         </div>
 
         <template id="slider-input-legend" style="display: none;">
@@ -37,7 +37,7 @@
                 <header v-on:click="$emit('legend-click', num)">{{num}}</header>
                 <div class="legendBody">
                     <span v-if="!editable">{{legend}}</span>
-                    <span v-else contenteditable="true">{{legend}}</span>
+                    <span v-else contenteditable="true" v-on:input="changed">{{legend}}</span>
                 </div>
             </div>
         </template>
@@ -47,21 +47,22 @@
                 <div class="edit">
                     <button v-on:click="editable = !editable">Edit Legends</button>
                 </div>
-                <div class="sliderContainer" ref="slider" v-bind:data-value="value" v-on:mousemove="mouseMove" v-on:mouseup="mouseUp">
+                <div class="sliderContainer" ref="slider" v-on:mousemove="mouseMove" v-on:mouseup="mouseUp">
                     <div class="legendHolder">
                         <slider-input-legend
                           v-for="n in max"
                           v-bind:num="n"
                           v-bind:legend="getLegend(n-1)"
-                          v-bind:actual-val="value"
+                          v-bind:actual-val="value.val"
                           v-bind:key="n"
                           v-bind:max="max"
                           v-bind:editable="editable"
-                          v-on:legend-click="headerClick"></slider-input-legend>
+                          v-on:legend-click="headerClick"
+                          v-on:legend-change="legendChange"></slider-input-legend>
                     </div>
                     <div class="sliderHolder" v-bind:style="leftOffset">
                         <div ref="deselected" class="pseudoDeselected"></div>
-                        <div class="arrowPointerBack"></div>
+                        <div class="arrowPointerBack" v-bind:style="pointerStyle"></div>
                         <div ref="pseudoSlider" class="pseudoSlider" v-bind:style="sliderStyle"></div>
                         <div class="pseudoDrag" v-on:mousedown="startDrag"></div>
                         <div class="arrowPointerFront" v-on:click="arrowClick"></div>
@@ -100,6 +101,11 @@
                         originalColour: ""
                     }
                 },
+                methods: {
+                    changed: function(e){
+                        this.$emit("legend-change", e.target.textContent, this.num - 1, this.actualVal);
+                    }
+                },
                 watch: {
                     actualVal: function(){
                         var col = (this.actualVal < this.num) ? this.$parent.deselectedColour : this.originalColour;
@@ -123,14 +129,10 @@
                 props:{
                     value: {
                         required: true,
-                        type: Number
+                        type: Object
                     },
                     dataScale: {
                         required: true,
-                        type: Array
-                    },
-                    userScale: {
-                        required: false,
                         type: Array
                     }
                 },
@@ -139,33 +141,42 @@
                         return c.length;
                     }).length;
                     return {
-                        dataValue: this.value,
                         dragging: false,
                         min: _.min(this.dataScale, function(c){
                             return c.length;
                         }).length,
                         max: max,
-                        leftOffset: "left: " + ((this.value / max) * 100) + "%",
+                        leftOffset: "left: " + ((this.value.val / max) * 100) + "%",
                         sliderStyle: "",
                         originalColour: "",
                         deselectedColour: "",
+                        pointerStyle: "",
                         editable: false
                     }
                 },
                 methods: {
+                    legendChange: function(legend, i, arr){
+                        if(!this.value.hasOwnProperty("scale")){
+                            this.value.scale = []
+                        }
+                        if(this.getScale(this.value.scale, arr) === -1){
+                            this.value.scale.push(_.times(arr, _.constant(null)));
+                        }
+                        this.value.scale[this.getScale(this.value.scale, arr)][i] = legend;
+                        this.$emit('input', this.value);
+                    },
                     getLegend: function(len){
-                        console.log("this.userScale", this.userScale);
-                        console.log("this.getScale(this.userScale, this.dataValue)", this.getScale(this.userScale, this.dataValue));
-                        console.log("this.userScale[this.getScale(this.userScale, this.dataValue)]", this.userScale[this.getScale(this.userScale, this.dataValue)]);
                         if(
-                            this.userScale &&
-                            (this.getScale(this.userScale, this.dataValue) !== -1) &&
-                            this.userScale[this.getScale(this.userScale, this.dataValue)] &&
-                            this.userScale[this.getScale(this.userScale, this.dataValue)][len]
+                            // Check for scale property
+                            this.value.hasOwnProperty("scale") &&
+                            // Check to see if there's a sub-array of the correct length
+                            this.getScale(this.value.scale, this.value.val) !== -1 &&
+                            // Check to see if the sub-array has a value
+                            this.value.scale[this.getScale(this.value.scale, this.value.val)][len] != null
                         ){
-                            return this.userScale[this.getScale(this.userScale, this.dataValue)][len];
+                            return this.value.scale[this.getScale(this.value.scale, this.value.val)][len];
                         }else{
-                            return this.dataScale[this.getScale(this.dataScale, this.dataValue)][len];
+                            return this.dataScale[this.getScale(this.dataScale, this.value.val)][len];
                         }
                     },
                     getScale: function(arr, len){
@@ -174,37 +185,45 @@
                         });
                     },
                     arrowClick: function(event) {
-                        if(this.dataValue > this.min && event.offsetX < 15){
-                            this.dataValue--;
-                        }
-                        if(this.dataValue < this.max && event.offsetX >= 15){
-                            this.dataValue++;
+                        if(!this.editable){
+                            if(this.value.val > this.min && event.offsetX < 15){
+                                this.value.val--;
+                            }
+                            if(this.value.val < this.max && event.offsetX >= 15){
+                                this.value.val++;
+                            }
                         }
                     },
-                    startDrag: function(){
-                        this.dragging = true;
+                    startDrag: function(event){
+                        if(!this.editable) {
+                            event.preventDefault();
+                            this.dragging = true;
+                        }
                     },
                     mouseMove: function(event){
-                        if(this.dragging){
+                        if(!this.editable && this.dragging){
+                            event.preventDefault();
                             var sliderWidth = this.$refs.slider.offsetWidth / this.max;
                             if(Math.round(event.clientX / sliderWidth) >= this.min && Math.round(event.clientX / sliderWidth) <= this.max){
                                 this.leftOffset = "left: " + (event.clientX - 10) + "px";
-                                this.dataValue = Math.round(event.clientX / (sliderWidth));
+                                this.value.val = Math.round(event.clientX / (sliderWidth));
                             }
                         }
                     },
                     mouseUp: function(){
-                        if(this.dragging) {
+                        if(!this.editable && this.dragging) {
                             this.dragging = false;
-                            this.leftOffset = "left: " + ((this.value / this.max) * 100) + "%";
+                            this.leftOffset = "left: " + ((this.value.val / this.max) * 100) + "%";
                         }
                     },
                     headerClick: function(newValue){
-                        if(newValue >= this.min && newValue <= this.max){
-                            this.dataValue = newValue;
-                        }else{
-                            if(newValue <= this.min){
-                                this.dataValue = this.min;
+                        if(!this.editable) {
+                            if(newValue >= this.min && newValue <= this.max){
+                                this.value.val = newValue;
+                            }else{
+                                if(newValue <= this.min){
+                                    this.value.val = this.min;
+                                }
                             }
                         }
                     },
@@ -244,20 +263,30 @@
                     }
                 },
                 watch: {
-                    dataValue: function(val){
-                        var gadientColour = this.shadeColor(this.originalColour, Math.abs(this.dataValue - this.max) * 5);
+                    "value.val": function(){
+                        var gadientColour = this.shadeColor(this.originalColour, Math.abs(this.value.val - this.max) * 5);
                         if(!this.dragging){
-                            this.leftOffset = "left: " + ((this.dataValue / this.max) * 100) + "%";
+                            this.leftOffset = "left: " + ((this.value.val / this.max) * 100) + "%";
                         }
                         this.sliderStyle = "background: linear-gradient(to right, " + gadientColour + ", " + gadientColour + " 70%, white 70%, white)";
-                        this.$emit('input', this.dataValue);
+                        this.$emit('input', this.value);
+                    },
+                    editable: function(val){
+                        if(val){
+                            this.sliderStyle = "background: " + this.deselectedColour;
+                            this.pointerStyle = "background: " + this.deselectedColour;
+                        }else{
+                            var gadientColour = this.shadeColor(this.originalColour, Math.abs(this.value.val - this.max) * 5);
+                            this.sliderStyle = "background: linear-gradient(to right, " + gadientColour + ", " + gadientColour + " 70%, white 70%, white)";
+                            this.pointerStyle = "";
+                        }
                     }
                 },
                 mounted: function(){
                     this.originalColour = this.rgb2hex(window.getComputedStyle(this.$refs.pseudoSlider, null).backgroundColor);
                     this.deselectedColour = this.rgb2hex(window.getComputedStyle(this.$refs.deselected, null).backgroundColor);
                     this.$nextTick(function () {
-                        var gadientColour = this.shadeColor(this.originalColour, Math.abs(this.value - this.max) * 5);
+                        var gadientColour = this.shadeColor(this.originalColour, Math.abs(this.value.val - this.max) * 5);
                         this.sliderStyle = "background: linear-gradient(to right, " + gadientColour + ", " + gadientColour + " 70%, white 70%, white)";
                     });
                 }
@@ -267,8 +296,16 @@
                 el: "#app",
                 data: function(){
                     return {
-                        Likelihood: 5,
-                        Impact: 5
+                        Likelihood: {
+                            val: 5,
+                            scale: [
+                                [null,null,null,'Bloody likely'],
+                                ["Meh","Don't know","Don't care"]
+                            ]
+                        },
+                        Impact: {
+                            val: 5
+                        }
                     }
                 }
             });
