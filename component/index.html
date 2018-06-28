@@ -9,27 +9,8 @@
     </head>
     <body>
         <div id="app">
-            <slider-input v-model="Likelihood" v-bind:data-scale="[
-                ['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],
-                ['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],
-                ['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],
-                ['Highly unlikely','Unlikely','Likely','Highly likely'],
-                ['Unlikely','Plausible','Likely']
-            ]"></slider-input>
-            <hr>
-            <slider-input v-model="Impact" v-bind:data-scale="[
-                ['Negligible','Very low','Low','Medium','High','Very high','Critical','Super Critical','Mega Critical'],
-                ['Negligible','Very low','Low','Medium','High','Very high','Critical','Super Critical'],
-                ['Negligible','Very low','Low','Medium','High','Very high','Critical'],
-                ['Negligible','Very low','Low','High','Very high','Critical'],
-                ['Very low','Low','Medium','High','Very high'],
-                ['Very low','Low','High','Very high'],
-                ['Low','Medium','High'],
-                ['Low','High'],
-                ['Unknown']
-            ]"></slider-input>
-            <p>Likelihood: {{Likelihood.val}}</p>
-            <p>Impact: {{Impact.val}}</p>
+            <slider-input v-model="Likelihood"></slider-input>
+            <!--<slider-input v-model="Impact"></slider-input>-->
         </div>
 
         <template id="slider-input-legend" style="display: none;">
@@ -44,33 +25,67 @@
 
         <template id="slider-input" style="display: none;">
             <div class="sliderComponent">
-                <div class="edit">
-                    <!-- These will require styling -->
-                    <button v-on:click="editable = false" v-if="editable">Finish editing</button>
-                    <button v-on:click="restoreDefault" v-if="editable">Restore default</button>
-                    <button v-on:click="editable = true" v-else>Edit Legends</button>
+                <div class="block-title">
+                    <span class="title legal">{{value.name}} <em><small>(scale length: {{value.val}})</small></em></span>
                 </div>
-                <div class="sliderContainer" ref="slider" v-on:mousemove="mouseMove" v-on:mouseup="mouseUp">
-                    <div class="legendHolder">
-                        <slider-input-legend
-                          v-for="n in max"
-                          v-bind:num="n"
-                          v-bind:legend="getLegend(n-1)"
-                          v-bind:actual-val="value.val"
-                          v-bind:key="n"
-                          v-bind:max="max"
-                          v-bind:editable="editable"
-                          v-on:legend-click="headerClick"
-                          v-on:legend-change="legendChange"></slider-input-legend>
+                <div class="block-twoparts">
+                    <h6>General scale</h6>
+                    <div v-if="editable">
+                        <button class="btn--aslink" v-on:click="restoreDefault"><em><small>Restore defaults</small></em></button>
+                        <button class="btn--aslink" v-on:click="editable = false">Save</button>
                     </div>
-                    <div class="sliderHolder" v-bind:style="leftOffset">
-                        <div ref="deselected" class="pseudoDeselected"></div>
-                        <div class="arrowPointerBack" v-bind:style="pointerStyle"></div>
-                        <div ref="pseudoSlider" class="pseudoSlider" v-bind:style="sliderStyle"></div>
-                        <div class="pseudoDrag" v-on:mousedown="startDrag"></div>
-                        <div class="arrowPointerFront" v-on:click="arrowClick"></div>
+                    <button class="btn--aslink" v-on:click="editable = true" v-else>Edit</button>
+                </div>
+                <div class="block">
+                    <div class="sliderContainer" ref="slider" v-on:mousemove="mouseMove" v-on:mouseup="mouseUp">
+                        <div class="legendHolder">
+                            <slider-input-legend
+                              v-for="n in max"
+                              v-bind:num="n"
+                              v-bind:legend="getLegend(n-1)"
+                              v-bind:actual-val="value.val"
+                              v-bind:key="n"
+                              v-bind:max="max"
+                              v-bind:editable="editable"
+                              v-on:legend-click="headerClick"
+                              v-on:legend-change="legendChange"></slider-input-legend>
+                        </div>
+                        <div class="sliderHolder" v-bind:style="leftOffset">
+                            <div ref="deselected" class="pseudoDeselected"></div>
+                            <div class="arrowPointerBack" v-bind:style="pointerStyle"></div>
+                            <div ref="pseudoSlider" class="pseudoSlider" v-bind:style="sliderStyle"></div>
+                            <div class="pseudoDrag" v-on:mousedown="startDrag"></div>
+                            <div class="arrowPointerFront" v-on:click="arrowClick"></div>
+                        </div>
                     </div>
                 </div>
+                <div class="contextHolder">
+
+                </div>
+                <div class="newContext" v-if="adding">
+                    <div class="contextTitle">
+                        <input type="text">
+                        <div>
+                            <button class="btn--aslink">Remove</button>
+                            <button class="btn--aslink">Save</button>
+                        </div>
+                    </div>
+                    <div class="contextBody">
+                        <div class="contextItems"><textarea rows="5"></textarea></div>
+                        <div class="contextItems"><textarea rows="5"></textarea></div>
+                        <div class="contextItems"><textarea rows="5"></textarea></div>
+                        <div class="contextItems"><textarea rows="5"></textarea></div>
+                        <div class="contextItems"><textarea rows="5"></textarea></div>
+                        <div class="contextItems"><textarea rows="5"></textarea></div>
+                        <div class="contextItems"><textarea rows="5"></textarea></div>
+                    </div>
+
+                </div>
+                <div class="block-twoparts">
+                    <div></div>
+                    <button class="btn--aslink" v-on:click="adding = !adding">Add context</button>
+                </div>
+
             </div>
         </template>
 
@@ -133,19 +148,15 @@
                     value: {
                         required: true,
                         type: Object
-                    },
-                    dataScale: {
-                        required: true,
-                        type: Array
                     }
                 },
                 data: function(){
-                    var max = _.max(this.dataScale, function(c){
+                    var max = _.max(this.value.default, function(c){
                         return c.length;
                     }).length;
                     return {
                         dragging: false,
-                        min: _.min(this.dataScale, function(c){
+                        min: _.min(this.value.default, function(c){
                             return c.length;
                         }).length,
                         max: max,
@@ -154,7 +165,8 @@
                         originalColour: "",
                         deselectedColour: "",
                         pointerStyle: "",
-                        editable: false
+                        editable: false,
+                        adding: false
                     }
                 },
                 methods: {
@@ -181,7 +193,7 @@
                         ){
                             return this.value.scale[this.getScale(this.value.scale, this.value.val)][len];
                         }else{
-                            return this.dataScale[this.getScale(this.dataScale, this.value.val)][len];
+                            return this.value.default[this.getScale(this.value.default, this.value.val)][len];
                         }
                     },
                     getScale: function(arr, len){
@@ -274,14 +286,30 @@
                 data: function(){
                     return {
                         Likelihood: {
+                            name: "Likelihood",
                             val: 5,
                             scale: [
                                 [null,null,null,'Bloody likely'],
                                 ["Meh","Don't know","Don't care"]
+                            ],
+                            default: [
+                                ['Almost impossible','Highly unlikely','Unlikely','Plausible','Likely','Highly likely','Almost certain'],
+                                ['Almost impossible','Highly unlikely','Unlikely','Likely','Highly likely','Almost certain'],
+                                ['Highly unlikely','Unlikely','Plausible','Likely','Highly likely'],
+                                ['Highly unlikely','Unlikely','Likely','Highly likely'],
+                                ['Unlikely','Plausible','Likely']
                             ]
                         },
                         Impact: {
-                            val: 5
+                            name: "Impact",
+                            val: 5,
+                            default: [
+                                ['Negligible','Very low','Low','Medium','High','Very high','Critical'],
+                                ['Negligible','Very low','Low','High','Very high','Critical'],
+                                ['Very low','Low','Medium','High','Very high'],
+                                ['Very low','Low','High','Very high'],
+                                ['Low','Medium','High'],
+                            ]
                         }
                     }
                 }
